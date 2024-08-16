@@ -1,0 +1,38 @@
+[
+    {
+        "type" : "ciudad",
+        "estructura":[["descripcion","estado"],["idciudad"]]
+    },
+    {
+        "type" : "curso",
+        "estructura":[["descripcion","estado"],["idcurso"]]
+    },
+    {
+        "type" : "turno",
+        "estructura":[["descripcion","estado"],["idturno"]]
+    },
+    {
+        "type" : "documentos",
+        "estructura":[["descripcion","estado"],["iddocumentos"]]
+    },
+    {
+        "type" : "tipo_evaluacion",
+        "estructura":[["descripcion","estado"],["idtipo_evaluacion"]]
+    },
+    {
+        "type" : "anho_lectivo",
+        "estructura":[["anho","estado"],["idanho_lectivo"]]
+    },
+    {
+        "type" : "aptitud_militar",
+        "estructura":[["descripcion","punto","estado"],["idaptitud_militar"]]
+    },
+    {
+        "type" : "materia",
+        "estructura":[["descripcion","observacion","estado"],["idmateria"]]
+    },
+    {
+        "type" : "grados_arma",
+        "estructura":[["grado","armas","estado"],["idgrados_arma"]]
+    }
+]

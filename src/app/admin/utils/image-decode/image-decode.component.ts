@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { ImagenBuffer } from '../../pages/referenciales/persona/persona.component';
 import { Buffer } from 'buffer';
+
+
+export interface ImagenBuffer {
+  type: string,
+  data: number[]
+}
 
 @Component({
   selector: 'app-image-decode',

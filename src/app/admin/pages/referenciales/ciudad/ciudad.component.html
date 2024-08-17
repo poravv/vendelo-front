@@ -11,7 +11,14 @@
     <i nz-icon nzType="search"></i>
   </ng-template>
   
-  <nz-table #editRowTable nzBordered [nzData]="listOfDisplayData" nzTableLayout="fixed" nzSize="middle">
+  <nz-table 
+        #editRowTable 
+        nzBordered 
+        [nzData]="listOfDisplayData" 
+        nzTableLayout="fixed" 
+        nzSize="middle"
+        nzShowPagination
+        nzShowSizeChanger>
     <thead>
       <tr>
         <!--th nzWidth="30%">COLOR1</th-->

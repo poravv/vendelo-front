@@ -4,9 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { es_ES, NZ_I18N } from 'ng-zorro-antd/i18n';
-import { en_US } from 'ng-zorro-antd/i18n';
+//import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
-import en from '@angular/common/locales/en';
+//import en from '@angular/common/locales/en';
 import es from '@angular/common/locales/es';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
@@ -22,6 +22,15 @@ import { CiudadCreateComponent } from './admin/pages/referenciales/ciudad/ciudad
 import { CiudadComponent } from './admin/pages/referenciales/ciudad/ciudad.component';
 import { CreateMasivoComponent } from './admin/pages/create-masivo/create-masivo.component';
 import { DeleteMasivoComponent } from './admin/pages/delete-masivo/delete-masivo.component';
+import { ProveedorComponent } from './admin/pages/referenciales/proveedor/proveedor.component';
+import { ProveedorCreateComponent } from './admin/pages/referenciales/proveedor/proveedor-create/proveedor-create.component';
+import { ArticuloComponent } from './admin/pages/referenciales/articulo/articulo.component';
+import { ArticuloCreateComponent } from './admin/pages/referenciales/articulo/articulo-create/articulo-create.component';
+import { ImageDecodeComponent } from './admin/utils/image-decode/image-decode.component';
+import { InventarioComponent } from './admin/pages/referenciales/inventario/inventario.component';
+import { InventarioCreateComponent } from './admin/pages/referenciales/inventario/inventario-create/inventario-create.component';
+import { sucursalComponent } from './admin/pages/referenciales/sucursal/sucursal.component';
+import { sucursalCreateComponent } from './admin/pages/referenciales/sucursal/sucursal-create/sucursal-create.component';
 registerLocaleData(es);
 
 export const authCodeFlowConfig: AuthConfig = {
@@ -55,6 +64,15 @@ function initializeOAuth(oauthService: OAuthService): Promise<void> {
     ContentHeaderComponent,
     CreateMasivoComponent,
     DeleteMasivoComponent,
+    ProveedorComponent,
+    ProveedorCreateComponent,
+    ArticuloComponent,
+    ArticuloCreateComponent,
+    ImageDecodeComponent,
+    InventarioComponent,
+    InventarioCreateComponent,
+    sucursalComponent,
+    sucursalCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +98,6 @@ function initializeOAuth(oauthService: OAuthService): Promise<void> {
       deps: [
         OAuthService
       ]
-      
     }
   ],
   bootstrap: [AppComponent]

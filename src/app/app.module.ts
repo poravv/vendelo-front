@@ -31,6 +31,16 @@ import { InventarioComponent } from './admin/pages/referenciales/inventario/inve
 import { InventarioCreateComponent } from './admin/pages/referenciales/inventario/inventario-create/inventario-create.component';
 import { sucursalComponent } from './admin/pages/referenciales/sucursal/sucursal.component';
 import { sucursalCreateComponent } from './admin/pages/referenciales/sucursal/sucursal-create/sucursal-create.component';
+import { PersonaCreateTemplateComponent } from './admin/pages/referenciales/persona/persona-create-template/persona-create-template.component';
+import { PersonaCreateComponent } from './admin/pages/referenciales/persona/persona-create/persona-create.component';
+import { PersonaComponent } from './admin/pages/referenciales/persona/persona.component';
+import { ClienteComponent } from './admin/pages/referenciales/cliente/cliente.component';
+import { ClienteCreateComponent } from './admin/pages/referenciales/cliente/cliente-create/cliente-create.component';
+import { ProductoFinalComponent } from './admin/pages/referenciales/producto_final/producto_final.component';
+import { ProductoFinalCreateComponent } from './admin/pages/referenciales/producto_final/producto_final-create/producto_final-create.component';
+import { VentaComponent } from './admin/pages/referenciales/venta/venta.component';
+import { VentaCreateComponent } from './admin/pages/referenciales/venta/venta-create/venta-create.component';
+import { VentaTotalComponent } from './admin/pages/referenciales/venta/total-venta/venta-total.component';
 registerLocaleData(es);
 
 export const authCodeFlowConfig: AuthConfig = {
@@ -72,7 +82,17 @@ function initializeOAuth(oauthService: OAuthService): Promise<void> {
     InventarioComponent,
     InventarioCreateComponent,
     sucursalComponent,
-    sucursalCreateComponent
+    sucursalCreateComponent,
+    PersonaCreateTemplateComponent,
+    PersonaCreateComponent,
+    PersonaComponent,
+    ClienteComponent,
+    ClienteCreateComponent,
+    ProductoFinalComponent,
+    ProductoFinalCreateComponent,
+    VentaComponent,
+    VentaCreateComponent,
+    VentaTotalComponent
   ],
   imports: [
     BrowserModule,

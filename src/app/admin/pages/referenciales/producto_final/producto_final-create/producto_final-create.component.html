@@ -1,0 +1,110 @@
+<app-content-header [title]="'Nuevo Producto'"></app-content-header>
+
+        <form nz-form [nzLayout]="'inline'" [formGroup]="validateFormReceta" (ngSubmit)="submitForm($event)">
+            
+            <nz-form-item nz-item>
+                <nz-form-label nz-label nzRequired>Nombre</nz-form-label>
+                <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                    <nz-input-group>
+                        <input formControlName="nombre" nz-input placeholder="Nombre" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-item>
+                <nz-form-label nz-label nzRequired>Descripción</nz-form-label>
+                <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                    <nz-input-group>
+                        <input formControlName="descripcion" nz-input placeholder="Descripción" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            
+
+            <nz-form-item nz-item>
+                <nz-form-label nz-label nzRequired>Costo</nz-form-label>
+                <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                    <nz-input-group>
+                        <input type="number" formControlName="costo" nz-input placeholder="Costo" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-item>
+                <nz-form-label nzRequired nz-label>Artículos</nz-form-label>
+                <nz-form-control nzErrorTip="Valor requerido">
+                    <nz-input-group>
+                        <nz-select [compareWith]="articuloComparator" [nzSize]="size" nzMode="multiple"
+                            nzPlaceHolder="Seleccione uno o más artículos" formControlName="receta" [(ngModel)]="multipleValue"
+                            (ngModelChange)="onArticuloChange($event)">
+                            <nz-option *ngFor="let articulo of articulos" [nzValue]="articulo"
+                                nzLabel={{articulo.descripcion}}>
+                            </nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <div *ngFor="let articulo of selectedArticulos" style="width: 100%;margin-left: 40px;">
+                <nz-form-item nz-item>
+                    <nz-form-label style="width: 70%;" nz-label>*{{articulo.descripcion}} Cantidad</nz-form-label>
+                    <nz-form-control>
+                        <!--input nz-input type="number" [(ngModel)]="articulo.cantidad" placeholder="Ingrese cantidad"-->
+                        <input nz-input type="number" (keyup)="updateCantidad(articulo.idarticulo, $event)" placeholder="Ingrese cantidad">
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <nz-form-item nz-item>
+                <nz-form-label nz-label nzRequired>Tipo de iva</nz-form-label>
+                <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                    <nz-input-group>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select tipo de iva" formControlName="tipo_iva">
+                            <nz-option nzLabel="5%" nzValue="5"></nz-option>
+                            <nz-option nzLabel="10%" nzValue="10"></nz-option>
+                            <nz-option nzLabel="Exenta" nzValue="0"></nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-item>
+                <nz-form-label nz-label nzRequired>Estado</nz-form-label>
+                <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                    <nz-input-group>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select estado" formControlName="estado">
+                            <nz-option nzLabel="Activo" nzValue="AC"></nz-option>
+                            <nz-option nzLabel="Inactivo" nzValue="IN"></nz-option>
+                        </nz-select>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-item>
+                <nz-form-label nz-label nzRequired>Foto</nz-form-label>
+                <nz-form-control>
+                    <nz-upload class="avatar-uploader" nzName="avatar" nzListType="picture-card"
+                        [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload" [nzCustomRequest]="customUploadReq"
+                        (nzChange)="handleChange($event)">
+                        <ng-container *ngIf="!avatarUrl">
+                            <span class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></span>
+                            <div class="ant-upload-text">Cargar</div>
+                        </ng-container>
+                        <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+                    </nz-upload>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-item>
+                <nz-form-control>
+                    <button nzType="default" nzDanger nz-button (click)="volver($event)">Volver</button>
+                </nz-form-control>
+                <nz-form-control>
+                    <button nz-button nzType="primary" [disabled]="!validateFormReceta.valid">Submit</button>
+                </nz-form-control>
+                <nz-form-control>
+                    <button nzType="primary" nzGhost nz-button (click)="resetForm($event)">Reset</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    

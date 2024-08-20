@@ -13,6 +13,13 @@ import { InventarioComponent } from './admin/pages/referenciales/inventario/inve
 import { InventarioCreateComponent } from './admin/pages/referenciales/inventario/inventario-create/inventario-create.component';
 import { sucursalComponent } from './admin/pages/referenciales/sucursal/sucursal.component';
 import { sucursalCreateComponent } from './admin/pages/referenciales/sucursal/sucursal-create/sucursal-create.component';
+import { ClienteComponent } from './admin/pages/referenciales/cliente/cliente.component';
+import { ClienteCreateComponent } from './admin/pages/referenciales/cliente/cliente-create/cliente-create.component';
+import { ProductoFinalComponent } from './admin/pages/referenciales/producto_final/producto_final.component';
+import { ProductoFinalCreateComponent } from './admin/pages/referenciales/producto_final/producto_final-create/producto_final-create.component';
+import { VentaComponent } from './admin/pages/referenciales/venta/venta.component';
+import { VentaCreateComponent } from './admin/pages/referenciales/venta/venta-create/venta-create.component';
+import { VentaTotalComponent } from './admin/pages/referenciales/venta/total-venta/venta-total.component';
 
 const routes: Routes = [
   { path: '', component: homeComponent },
@@ -51,6 +58,35 @@ const routes: Routes = [
     children: [
       { path: 'list', component: sucursalComponent },
       { path: 'create', component: sucursalCreateComponent }
+    ]
+  },
+  {
+    path: 'cliente',
+    children: [
+      { path: 'list', component: ClienteComponent },
+      { path: 'create', component: ClienteCreateComponent },
+      { path: 'edit/:idcliente', component: ClienteCreateComponent }
+    ]
+  },
+  {
+    path: 'producto_final',
+    children: [
+      { path: 'list', component: ProductoFinalComponent },
+      { path: 'create', component: ProductoFinalCreateComponent }
+    ]
+  },
+  {
+    path: 'venta',
+    children: [
+      { path: 'list', component: VentaComponent },
+      { path: 'create', component: VentaCreateComponent }
+    ]
+  },
+  {
+    path: 'total_venta',
+    children: [
+      { path: 'list', component: VentaTotalComponent },
+      { path: 'create', component: VentaCreateComponent }
     ]
   },
   { path: '**', redirectTo: '' },

@@ -92,7 +92,7 @@ export class InventarioComponent implements OnInit {
   anulaRow(idinventario:number):void {
     const index = this.listOfData.findIndex(item => item.idinventario === idinventario);
     this.listOfData[index].estado="IN"
-    console.log(this.listOfData[index]);
+    //console.log(this.listOfData[index]);
     this.inventarioService.updateInventario(this.listOfData[index]).subscribe((response) => {
       //console.log(response);
       if (response.mensaje == 'error') {

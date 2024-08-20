@@ -14,28 +14,30 @@
           <span nz-icon nzType="home"></span>
           <span>Home</span>
         </li>
-        <li nz-submenu nzTitle="Sys admin" nzIcon="setting">
+        <li nz-submenu nzTitle="Sistema" nzIcon="setting">
           <ul>
             <li nz-menu-item [routerLink]="'ciudad/list'">Ciudad</li>
             <li nz-menu-item [routerLink]="'proveedor/list'">Proveedor</li>
-            <li nz-menu-item [routerLink]="'articulo/list'">Articulo</li>
             <li nz-menu-item [routerLink]="'sucursal/list'">Sucursal</li>
-            <li nz-menu-item [routerLink]="'inventario/list'">Inventario</li>
           </ul>
         </li>
         <li nz-submenu nzTitle="Administracion" nzIcon="laptop">
           <ul>
-            <li nz-menu-item>option6</li>
-            <li nz-menu-item>option7</li>
-            <li nz-menu-item>option8</li>
+            <li nz-menu-item [routerLink]="'articulo/list'">Articulo</li>
+            <li nz-menu-item [routerLink]="'producto_final/list'">Produccion</li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="subnav 3" nzIcon="notification">
+        <li nz-submenu nzTitle="Venta" nzIcon="stock">
           <ul>
-            <li nz-menu-item>option9</li>
-            <li nz-menu-item>option10</li>
-            <li nz-menu-item>option11</li>
-            <li nz-menu-item>option12</li>
+            <li nz-menu-item [routerLink]="'inventario/list'">Inventario</li>
+            <li nz-menu-item [routerLink]="'cliente/list'">Cliente</li>
+            <li nz-menu-item [routerLink]="'venta/list'">Venta</li>
+            <li nz-menu-item [routerLink]="'total_venta/list'">Total Venta</li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="Reporteria" nzIcon="pie-chart">
+          <ul>
+            <li nz-menu-item [routerLink]="'inventario/list'">Venta</li>
           </ul>
         </li>
       </ul>

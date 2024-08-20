@@ -1,4 +1,4 @@
-<app-content-header [title]="'Inventario'" [route]="'/inventario/create'" [exportExcel]="true"
+<app-content-header [title]="'Inventario'" [exportExcel]="true"
   [dataExport]="listOfDisplayData" [dataExportTitle]="'inventario'" [masivo]="true" [type]="'inventario'">
 </app-content-header>
 
@@ -41,8 +41,8 @@
           <td>{{ data.notificar }}</td>
           <td>{{ data.estado=="AC"?"Activo":"Inactivo" }}</td>
           <td>
-            <a style="padding: 4px;" [routerLink]="['/inventario/create', data.idinventario,data.idarticulo]" nzTooltipTitle="Agregar"
-              nz-tooltip>Agregar</a>
+            <a style="padding: 4px;" [routerLink]="['/inventario/create', data.idinventario,data.idarticulo]"
+              nzTooltipTitle="Agregar" nz-tooltip>Agregar</a>
             <a style="padding: 4px;" nz-popconfirm nzPopconfirmTitle="Seguro que desea eliminar?"
               (nzOnConfirm)="anulaRow(data.idinventario)">Anular</a>
           </td>

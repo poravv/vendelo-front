@@ -138,6 +138,7 @@ export class sucursalComponent implements OnInit {
   getAllSucursal() {
     this.sucursalService.getSucursal().subscribe({
       next: (response) => {
+        console.log(response)
         if (response) {
           response.body.map((data: sucursalModel) => {
             this.listOfData.push(data);

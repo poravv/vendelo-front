@@ -1,145 +1,174 @@
-<app-content-header [title]="'Nueva Venta'"></app-content-header>
+<nz-tabset>
+    <nz-tab nzTitle="Venta">
+        <app-content-header [title]="'Nueva Venta'"></app-content-header>
 
-<div class="borde">
-    <form style="padding: 10px;" nz-form [nzLayout]="'inline'" [formGroup]="saveForm">
-        <nz-form-item nz-item>
-            <nz-form-label nz-label nzRequired>Clientes</nz-form-label>
-            <nz-form-control nzErrorTip="Inserte un valor correcto!">
-                <nz-select class="options" name="cliente" nzShowSearch nzAllowClear nzPlaceHolder="Seleccione cliente"
-                    formControlName="idcliente">
-                    <nz-option *ngFor="let cliente of clientes" [nzValue]="cliente.idcliente"
-                        nzLabel={{cliente.razon_social}}>
-                    </nz-option>
-                </nz-select>
-            </nz-form-control>
-        </nz-form-item>
+        <div nz-row style="display: flex; flex-wrap: wrap;">
+            <div nz-col style="width: 420px;" class="borde">
+                <form style="padding: 8px;" nz-form [nzLayout]="'inline'" [formGroup]="saveForm">
+                    <nz-form-item nz-item>
+                        <nz-form-label nz-label nzRequired>Tipo de Venta</nz-form-label>
+                        <nz-radio-group formControlName="tipo_venta">
+                            <label nz-radio nzValue="CO">Contado</label>
+                            <label nz-radio nzValue="CR">Credito</label>
+                        </nz-radio-group>
+                    </nz-form-item>
+                    <nz-form-item nz-item *ngIf="saveForm.get('tipo_venta')?.value === 'CR'">
+                        <nz-form-label nz-label nzRequired>Cantidad cuotas</nz-form-label>
+                        <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                            <nz-input-group>
+                                <input nz-input formControlName="cuotas" type="number" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item nz-item>
+                        <nz-form-label nz-label nzRequired>Clientes</nz-form-label>
+                        <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                            <nz-select class="options" name="cliente" nzShowSearch nzAllowClear
+                                nzPlaceHolder="Seleccione cliente" formControlName="idcliente">
+                                <nz-option *ngFor="let cliente of clientes" [nzValue]="cliente.idcliente"
+                                    nzLabel={{cliente.razon_social}}>
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
 
-        <nz-form-item nz-item>
-            <nz-form-label nz-label>Costo de envio</nz-form-label>
-            <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                    <nz-form-item nz-item>
+                        <nz-form-label nz-label>Costo de envio</nz-form-label>
+                        <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                            <nz-input-group>
+                                <input nz-input id="envio" formControlName="costo_envio" type="number" step="0.01" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </form>
+
+                <nz-divider style="margin: 10px;width: 80%;"></nz-divider>
+
+                <form style="padding: 10px;" nz-form [nzLayout]="'inline'" [formGroup]="validateForm"
+                    (ngSubmit)="agregarVenta()">
+                    <nz-form-item nz-item>
+                        <nz-form-label nz-label nzRequired>Ofertas</nz-form-label>
+                        <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                            <nz-input-group>
+                                <nz-select class="options" name="producto" nzShowSearch nzAllowClear
+                                    nzPlaceHolder="Seleccione una oferta" formControlName="producto">
+                                    <nz-option *ngFor="let productos of productosFinales" [nzValue]="productos"
+                                        nzLabel={{productos.nombre}}>
+                                    </nz-option>
+                                </nz-select>
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item nz-item>
+                        <nz-form-label nz-label nzRequired>Precio</nz-form-label>
+                        <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                            <nz-input-group>
+                                <input nz-input id="precio" formControlName="precio" type="number" step="0.01" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item nz-item>
+                        <nz-form-label nz-label nzRequired>Cantidad</nz-form-label>
+                        <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                            <nz-input-group>
+                                <input nz-input id="cantidad" formControlName="cantidad" type="number" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item nz-item>
+                        <nz-form-label nz-label>Descuento</nz-form-label>
+                        <nz-form-control nzErrorTip="Inserte un valor correcto!">
+                            <nz-input-group>
+                                <input nz-input id="descuento" formControlName="descuento" type="number" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-control style="width: 100%;display: flex; align-items: start;">
+                        <button nzTooltipTitle="Refrescar listas" nzTooltipPlacement="top" nz-tooltip nz-button nzType="default" (click)="refreshProductList($event)">
+                            <span style="font-size: 24px;" nz-icon nzType="redo" nzTheme="outline"></span>
+                        </button>
+                        <button [disabled]="validateForm.invalid" nz-button nzType="primary">
+                            <span style="font-size: 24px;" nz-icon nzType="plus" nzTheme="outline"></span>
+                        </button>
+                    </nz-form-control>
+                </form>
+            </div>
+            <div nz-col style="width: 650px;">
+                <div class="product-list">
+                    <div *ngFor="let venta of tblVentas" class="product-card">
+                        <div class="product-info">
+                            <h3>{{ venta.producto.nombre }}</h3>
+                            <div class="product-details">
+                                <div class="left-column">
+                                    <div class="row">
+                                        <p><strong>Cantidad:</strong> {{ venta.cantidad }}</p>
+                                        <p><strong>Precio:</strong> {{ separador(venta.producto.costo) }}</p>
+                                        <p><strong>Descuento:</strong> {{ separador(venta.descuento) }}</p>
+                                    </div>
+                                    <div class="row">
+                                        <p><strong>IVA:</strong> {{ venta.producto.tipo_iva }}%</p>
+                                        <p><strong>Monto IVA:</strong> {{ separador(venta.iva) }}</p>
+                                        <p><strong>Subtotal:</strong> {{ separador(venta.subtotal) }}</p>
+                                    </div>
+                                </div>
+                                <div class="right-column">
+                                    <div class="product-actions">
+                                        <a nz-popconfirm nzPopconfirmTitle="Seguro que desea extraer?"
+                                            (nzOnConfirm)="extraeRow(venta)">
+                                            <span nz-icon nzType="delete" nzTheme="outline"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="totals">
+                    <p><strong>Total IVA:</strong> {{ separador(totalIva) }}</p>
+                    <p><strong>Total General:</strong> {{ separador(totalGeneral) }}</p>
+                    <nz-form-item style="width: 100%;">
+                        <nz-form-control style="display: flex; align-items: end;">
+                            <!--button nz-button nzType="primary" type="submit" (click)="submitForm()"
+                                [disabled]="saveForm.invalid">Guardar</button-->
+                            <!--button style="margin-top: 10px;" nz-button nzType="primary" type="submit"
+                                [disabled]="totalGeneral==0" (click)="showModal()">Procesar</button-->
+                            <button style="margin-top: 10px;" nz-button nzType="primary" type="submit"
+                                [disabled]="saveForm.invalid || totalGeneral == 0"
+                                (click)="showModal()">Procesar</button>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+            </div>
+        </div>
+
+        <nz-modal [(nzVisible)]="modalIsVisible" nzTitle="Confirmar venta" (nzOnCancel)="handleCancel()"
+            (nzOnOk)="handleOk()">
+            <ng-container *nzModalContent>
                 <nz-input-group>
-                    <input nz-input id="envio" formControlName="costo_envio" type="number" step="0.01" />
+                    <label nz-label nzRequired>Total</label>
+                    <br />
+                    <input nz-input [value]="totalGeneral" disabled="true" id="total" type="number" step="0.01" />
                 </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
-    </form>
-
-    <nz-divider style="margin: 10px;width: 80%;"></nz-divider>
-
-    <form style="padding: 10px;" nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="agregarVenta()">
-        <nz-form-item nz-item>
-            <nz-form-label nz-label nzRequired>Productos</nz-form-label>
-            <nz-form-control nzErrorTip="Inserte un valor correcto!">
                 <nz-input-group>
-                    <nz-select class="options" name="producto" nzShowSearch nzAllowClear
-                        nzPlaceHolder="Seleccione producto" formControlName="producto">
-                        <nz-option *ngFor="let productos of productosFinales" [nzValue]="productos"
-                            nzLabel={{productos.nombre}}>
-                        </nz-option>
-                    </nz-select>
+                    <label nz-label nzRequired>Monto cliente</label>
+                    <br />
+                    <input nz-input [(ngModel)]="value" (keyup)="generaVuelto()" id="total" type="number" step="0.01" />
                 </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item nz-item>
-            <nz-form-label nz-label nzRequired>Precio</nz-form-label>
-            <nz-form-control nzErrorTip="Inserte un valor correcto!">
                 <nz-input-group>
-                    <input nz-input id="precio" formControlName="precio" type="number" step="0.01" />
+                    <label nz-label nzRequired>Vuelto</label>
+                    <br />
+                    <a style="color: red;">{{vuelto}}</a>
                 </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
 
-        <nz-form-item nz-item>
-            <nz-form-label nz-label nzRequired>Cantidad</nz-form-label>
-            <nz-form-control nzErrorTip="Inserte un valor correcto!">
-                <nz-input-group>
-                    <input nz-input id="cantidad" formControlName="cantidad" type="number" />
-                </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item nz-item>
-            <nz-form-label nz-label>Descuento</nz-form-label>
-            <nz-form-control nzErrorTip="Inserte un valor correcto!">
-                <nz-input-group>
-                    <input nz-input id="descuento" formControlName="descuento" type="number" />
-                </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item style="width: 100%;">
-            <nz-form-control style="display: flex; align-items: center;">
-                <button nz-button nzType="primary" type="submit" [disabled]="validateForm.invalid">Agregar</button>
-            </nz-form-control>
-        </nz-form-item>
-    </form>
-</div>
-
-<div style="margin: 20px;"></div>
-
-<nz-table #tblventas [nzData]="tblVentas" [nzBordered]="true" [nzShowPagination]="false">
-    <thead>
-        <tr>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Descuento</th>
-            <th>IVA</th>
-            <th>Monto IVA</th>
-            <th>Subtotal</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let venta of tblventas.data">
-            <td>{{ venta.producto.nombre }}</td>
-            <td>{{ venta.cantidad }}</td>
-            <td>{{ separador(venta.producto.costo) }}</td>
-            <td>{{ separador(venta.descuento) }}</td>
-            <td>{{ venta.producto.tipo_iva }}%</td>
-            <td>{{ separador(venta.iva) }}</td>
-            <td>{{ separador(venta.subtotal) }}</td>
-            <td>
-                <a style="padding: 4px;" nz-popconfirm nzPopconfirmTitle="Seguro que desea extraer?"
-                    (nzOnConfirm)="extraeRow(venta)">Delete</a>
-            </td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="2" style="text-align: right;"><strong>Total General:</strong></td>
-            <td>{{ separador(totalIva) }}</td>
-            <td colspan="2" style="text-align: right;"><strong>Total General:</strong></td>
-            <td>{{ separador(totalGeneral) }}</td>
-        </tr>
-    </tfoot>
-</nz-table>
-<nz-divider style="margin: 10px;"></nz-divider>
-<nz-form-item style="width: 100%;">
-    <nz-form-control style="display: flex; align-items: end;">
-        <!--button nz-button nzType="primary" type="submit" (click)="submitForm()"
-            [disabled]="saveForm.invalid">Guardar</button-->
-
-            <button nz-button nzType="primary" type="submit" (click)="showModal()">Guardar</button>
-    </nz-form-control>
-</nz-form-item>
-
-<nz-modal [(nzVisible)]="modalIsVisible" nzTitle="Confirmar venta" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-    <ng-container *nzModalContent>
-        <nz-input-group>
-            <label nz-label nzRequired>Total</label>
-            <br/>
-            <input nz-input [value]="totalGeneral" disabled="true" id="total" type="number" step="0.01" />
-        </nz-input-group>
-        <nz-input-group>
-            <label nz-label nzRequired>Monto cliente</label>
-            <br/>
-            <input nz-input [(ngModel)]="value" (keyup)="generaVuelto()" id="total" type="number" step="0.01" />
-        </nz-input-group>
-        <nz-input-group>
-            <label nz-label nzRequired>Vuelto</label>
-            <br/>
-            <a style="color: red;">{{vuelto}}</a>
-        </nz-input-group>
-        
-    </ng-container>
-</nz-modal>
+            </ng-container>
+        </nz-modal>
+    </nz-tab>
+    <nz-tab nzTitle="Add cliente">
+        <app-cliente-create></app-cliente-create>
+    </nz-tab>
+</nz-tabset>

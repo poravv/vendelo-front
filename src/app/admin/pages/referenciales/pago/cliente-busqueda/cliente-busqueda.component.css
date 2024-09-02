@@ -1,0 +1,31 @@
+ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .cliente-item {
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  
+  .cliente-card {
+    background-color: #fed8a7;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 90%;
+    margin: auto;
+  }
+  
+  .cliente-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cliente-card p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+  }
+  

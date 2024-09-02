@@ -1,0 +1,28 @@
+<div *ngIf="deudas.length > 0">
+
+  <nz-table #basicTable [nzData]="deudas" nzBordered nzSize="middle">
+    <thead>
+      <tr>
+        <th>Fecha de Vencimiento</th>
+        <th>Monto</th>
+        <th>Cuota</th>
+        <th>Pagado</th>
+        <th>Seleccionar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let deuda of deudas">
+        <td>{{ deuda.vencimiento }}</td>
+        <td>{{ deuda.monto_pago }}</td>
+        <td>{{ deuda.cuota }}</td>
+        <td>{{ deuda.pagado }}</td>
+        <td>{{ deuda.estado=='PP'?'Pendiente de pago':deuda.estado=='PAR'?'Pago parcial':'Pagado' }}</td>
+        <td>
+          <label nz-checkbox [(ngModel)]="deuda.selected"></label>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <button nz-button nzType="primary" (click)="irAPagos()">Procesar Pagos</button>
+</div>

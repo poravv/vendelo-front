@@ -14,32 +14,33 @@
           <span nz-icon nzType="home"></span>
           <span>Home</span>
         </li>
-        <li nz-submenu nzTitle="Sistema" nzIcon="setting">
+        <li nz-submenu nzTitle="Sistema" nzIcon="setting" *ngIf="hasAnyRole(['admin','stock'])">
           <ul>
             <li nz-menu-item [routerLink]="'ciudad/list'">Ciudad</li>
             <li nz-menu-item [routerLink]="'proveedor/list'">Proveedor</li>
             <li nz-menu-item [routerLink]="'sucursal/list'">Sucursal</li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="Administracion" nzIcon="laptop">
+        <li nz-submenu nzTitle="Administracion" nzIcon="laptop" *ngIf="hasAnyRole(['admin','stock'])">
           <ul>
             <li nz-menu-item [routerLink]="'articulo/list'">Articulo</li>
-            <li nz-menu-item [routerLink]="'producto_final/list'">Produccion</li>
+            <li nz-menu-item [routerLink]="'producto_final/list'">Ofertas</li>
+            <li nz-menu-item [routerLink]="'inventario/list'">Inventario</li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="Venta" nzIcon="stock">
+        <li nz-submenu nzTitle="Venta" nzIcon="stock" *ngIf="hasAnyRole(['admin'])">
           <ul>
-            <li nz-menu-item [routerLink]="'inventario/list'">Inventario</li>
             <li nz-menu-item [routerLink]="'cliente/list'">Cliente</li>
             <li nz-menu-item [routerLink]="'venta/list'">Venta</li>
+            <li nz-menu-item [routerLink]="'cliente/busqueda'">Pago</li>
             <li nz-menu-item [routerLink]="'total_venta/list'">Total Venta</li>
           </ul>
         </li>
-        <li nz-submenu nzTitle="Reporteria" nzIcon="pie-chart">
+        <!--li nz-submenu nzTitle="Reporteria" nzIcon="pie-chart">
           <ul>
             <li nz-menu-item [routerLink]="'inventario/list'">Venta</li>
           </ul>
-        </li>
+        </li-->
       </ul>
     </nz-sider>
     <nz-content>

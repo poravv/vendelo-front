@@ -1,0 +1,20 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()" style="display: flex;">
+    <nz-form-item nz-item style="width: 80%;">
+      <nz-form-label nz-label nzRequired>Buscar Cliente</nz-form-label>
+      <nz-form-control nzErrorTip="Por favor, ingrese RUC o nombre">
+        <input nz-input formControlName="searchTerm" placeholder="RUC o Nombre del Cliente" />
+      </nz-form-control>
+    </nz-form-item>
+    <button nz-button nzType="primary" type="submit" [disabled]="searchForm.invalid">Buscar</button>
+  </form>
+  
+  <div *ngIf="clientes.length > 0">
+    <ul>
+      <li *ngFor="let cliente of clientes" (click)="selectCliente(cliente)" class="cliente-item">
+        <div class="cliente-card">
+          <p><b>Cliente:</b> {{ cliente.razon_social }} / <b>documento:</b> {{ cliente.ruc }} / <b>Fecha:</b> {{ cliente.fecha }} / <b>Total:</b> {{ cliente.total }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  

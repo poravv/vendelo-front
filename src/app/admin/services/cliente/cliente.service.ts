@@ -23,6 +23,14 @@ export class ClienteService {
     });
   }
 
+  buscarClientes(searchTerm: string):Observable<any> {
+    //console.log(this.oauthService.getAccessToken());
+    return this.httpClient.get(`${baseURL}/search/${searchTerm}`, {
+      headers: {
+        'Authorization': `Bearer ${this.oauthService.getAccessToken()}`,
+      }
+    });
+  }
 
   getCliente():Observable<any> {
     //console.log(this.oauthService.getAccessToken());

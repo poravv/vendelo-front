@@ -23,6 +23,10 @@ import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @NgModule({
   declarations: [],
@@ -50,7 +54,11 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
     NzImageModule,
     NzDatePickerModule,
     NzTabsModule,
-    NzDividerModule
+    NzDividerModule,
+    NzCardModule,
+    NzRadioModule,
+    NzToolTipModule,
+    NzCheckboxModule
   ],
   exports:[
     CommonModule,
@@ -76,7 +84,11 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
     NzImageModule,
     NzDatePickerModule,
     NzTabsModule,
-    NzDividerModule
+    NzDividerModule,
+    NzCardModule,
+    NzRadioModule,
+    NzToolTipModule,
+    NzCheckboxModule
   ]
 })
 export class SharedModule { }

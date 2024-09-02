@@ -21,6 +21,7 @@ import { ClienteModel } from '../../cliente/cliente.component';
 import { ClienteService } from 'src/app/admin/services/cliente/cliente.service';
 import { agregarSeparadorMiles } from 'src/app/admin/utils/separador-miles/agregarSeparadorMiles';
 import { VentaService } from 'src/app/admin/services/venta/venta.service';
+import { tipoVentaCuotasValidator } from './validator';
 
 @Component({
   selector: 'app-venta-create',
@@ -41,8 +42,10 @@ export class VentaCreateComponent implements OnInit {
   productosFinales: any[] = [];
   clientes: ClienteModel[] = [];
   modalIsVisible = false;
+  modalCliente = false;
   value: number = 0;
   vuelto: number = 0;
+  radioValue: string = 'A';
 
   separador(valor: number): string {
     return agregarSeparadorMiles(Math.floor(valor)) ?? "";
@@ -69,13 +72,15 @@ export class VentaCreateComponent implements OnInit {
 
     this.saveForm = this.fb.group({
       idcliente: ['', Validators.required],
+      tipo_venta: ['',Validators.required],
       costo_envio: [0],
       nro_comprobante: [''],
+      cuotas: [''],
       comision: [''],
       iva_total: [''],
       total: [''],
       detalle: [[], [Validators.required]],
-    });
+    }, { validators: tipoVentaCuotasValidator });
 
     this.validateForm.get('precio')?.disable();
 
@@ -89,7 +94,14 @@ export class VentaCreateComponent implements OnInit {
     });
   }
 
+  refreshProductList(e: any) {
+    e.preventDefault();
+    this.getAllProducto();
+    this.getAllClientes();
+  }
+
   getAllProducto() {
+    this.productosFinales = [];
     this.productoFinalService.getProductoVenta().subscribe({
       next: (response) => {
         if (response) {
@@ -127,8 +139,6 @@ export class VentaCreateComponent implements OnInit {
       const subtotal = (cantidad * producto.costo) - descuento;
       const iva = (subtotal * producto.tipo_iva) / 100;
       const idproducto_final = producto.idproducto_final;
-
-      console.log(producto)
 
       //La idea es hacer que en el server se haga el calculo de si existe o no el stock por el producto
       if (producto.obs !== 'STOCK') {
@@ -174,8 +184,6 @@ export class VentaCreateComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log(this.totalIva)
-    console.log(this.totalGeneral)
 
     this.saveForm.patchValue({
       iva_total: this.totalIva,
@@ -184,10 +192,8 @@ export class VentaCreateComponent implements OnInit {
       comision: 0
     });
 
-    console.log(this.saveForm.value);
-
     this.ventaService.createVenta(this.saveForm.value).subscribe((response) => {
-      console.log(response);
+      //console.log(response);
       if (response.mensaje == 'error') {
         this.messageService.createMessage('error', response.detmensaje);
       } else {
@@ -195,6 +201,7 @@ export class VentaCreateComponent implements OnInit {
         this.validateForm.reset();
       }
     });
+
     //console.log('submit', this.validateForm.value);
   }
 
@@ -301,13 +308,27 @@ export class VentaCreateComponent implements OnInit {
     this.modalIsVisible = true;
   }
 
+  showModalCliente(): void {
+    this.modalCliente = true;
+  }
+
+  disposeModalCliente(): void {
+    this.modalCliente = false;
+  }
+
   handleOk(): void {
-    console.log('Button ok clicked!');
+    //Aqui poner la logica para guardar todo 
+    //console.log('Button ok clicked!');
+    this.submitForm();
     this.modalIsVisible = false;
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
+    //console.log('Button cancel clicked!');
+    this.modalIsVisible = false;
+  }
+
+  handleCancelCliente(): void {
     this.modalIsVisible = false;
   }
 

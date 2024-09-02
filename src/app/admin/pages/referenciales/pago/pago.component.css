@@ -1,0 +1,39 @@
+.deuda-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* Espacio entre elementos */
+  background-color: #f9f9f9; /* Color de fondo */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 16px; /* Espaciado interno */
+  margin-bottom: 16px; /* Espaciado inferior */
+  border: 1px solid #ddd; /* Borde */
+  width: auto; /* Ajustar el ancho automáticamente */
+}
+.deuda-item {
+  margin-bottom: 8px; /* Espaciado entre elementos */
+  --border: 1px solid #ddd; /* Borde */
+  --background-color: #b4ccff; /* Color de fondo */
+  --border-radius: 2px;
+}
+
+nz-form-control {
+  display: flex;
+  flex-direction: column;
+}
+
+b {
+  color: #333; /* Color del texto en negrita */
+}
+
+.vuelto {
+  color: red; /* Color del texto del vuelto */
+  font-weight: bold;
+}
+
+/* ticket.component.css */
+@media print {
+  #ticket {
+    width: 80mm;
+    font-size: 12px;
+  }
+}

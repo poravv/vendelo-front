@@ -25,7 +25,7 @@ export interface VentaModel {
 
 export class VentaTotalComponent implements OnInit {
 
-  constructor (private ventaService: VentaService, private messageService: MessageService, private msg: NzMessageService) { }
+  constructor(private ventaService: VentaService, private messageService: MessageService, private msg: NzMessageService) { }
 
   editCache: { [key: string]: { edit: boolean; data: VentaModel } } = {};
   listOfData: VentaModel[] = [];
@@ -54,13 +54,28 @@ export class VentaTotalComponent implements OnInit {
     this.listOfData.forEach((value: any) => {
       let keys = Object.keys(value);
       for (let i = 0; i < keys.length; i++) {
-        if (value[keys[i]] && value[keys[i]].toString().toLocaleLowerCase().includes(search.toLocaleLowerCase())) {
+        if (this.checkNestedProperties(value[keys[i]], search)) {
           targetValue.push(value);
           break;
         }
       }
     });
     this.listOfDisplayData = targetValue;
+  }
+
+  checkNestedProperties(obj: any, search: string): boolean {
+    if (typeof obj === 'object' && obj !== null) {
+      for (let key in obj) {
+        if (obj[key] && this.checkNestedProperties(obj[key], search)) {
+          return true;
+        }
+      }
+    } else if (typeof obj === 'string' || typeof obj === 'number') {
+      if (obj.toString().toLocaleLowerCase().includes(search.toLocaleLowerCase())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   deleteRow(idventa: number): void {

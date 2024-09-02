@@ -69,10 +69,10 @@ export class ClienteCreateComponent implements OnInit {
     this.getAllCiudad();
     //console.log(this.idcliente)
     if (this.idcliente == "") {
-      this.title = 'Agregar nueva zona';
+      this.title = 'Agregar cliente';
       this.createCliente = true;
     } else {
-      this.title = 'Editar datos de nodos';
+      this.title = 'Editar cliente';
       this.createCliente = false;
       this.searchClient();
     }

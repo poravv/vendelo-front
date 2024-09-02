@@ -20,74 +20,83 @@ import { ProductoFinalCreateComponent } from './admin/pages/referenciales/produc
 import { VentaComponent } from './admin/pages/referenciales/venta/venta.component';
 import { VentaCreateComponent } from './admin/pages/referenciales/venta/venta-create/venta-create.component';
 import { VentaTotalComponent } from './admin/pages/referenciales/venta/total-venta/venta-total.component';
+import { ClienteBusquedaComponent } from './admin/pages/referenciales/pago/cliente-busqueda/cliente-busqueda.component';
+import { DeudaListadoComponent } from './admin/pages/referenciales/pago/deuda-listado/deuda-listado.component';
+import { PagoComponent } from './admin/pages/referenciales/pago/pago.component';
+import { RoleGuard } from './admin/services/auth/role.guard';
 
 const routes: Routes = [
   { path: '', component: homeComponent },
-  { path: 'create-masivo/:type', component: CreateMasivoComponent },
-  { path: 'delete-masivo/:type', component: DeleteMasivoComponent },
+  { path: 'create-masivo/:type', component: CreateMasivoComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } },
+  { path: 'delete-masivo/:type', component: DeleteMasivoComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } },
   {
     path: 'ciudad',
     children: [
-      { path: 'list', component: CiudadComponent },
-      { path: 'create', component: CiudadCreateComponent }
+      { path: 'list', component: CiudadComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } },
+      { path: 'create', component: CiudadCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } }
     ]
   },
   {
     path: 'proveedor',
     children: [
-      { path: 'list', component: ProveedorComponent },
-      { path: 'create', component: ProveedorCreateComponent }
+      { path: 'list', component: ProveedorComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } },
+      { path: 'create', component: ProveedorCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } }
     ]
   },
   {
     path: 'articulo',
     children: [
-      { path: 'list', component: ArticuloComponent },
-      { path: 'create', component: ArticuloCreateComponent }
+      { path: 'list', component: ArticuloComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } },
+      { path: 'create', component: ArticuloCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } }
     ]
   },
   {
     path: 'inventario',
     children: [
-      { path: 'list', component: InventarioComponent },
-      { path: 'create/:idinventario/:idarticulo', component: InventarioCreateComponent }
+      { path: 'list', component: InventarioComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } },
+      { path: 'create/:idinventario/:idarticulo', component: InventarioCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } }
     ]
   },
   {
     path: 'sucursal',
     children: [
-      { path: 'list', component: sucursalComponent },
-      { path: 'create', component: sucursalCreateComponent }
+      { path: 'list', component: sucursalComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } },
+      { path: 'create', component: sucursalCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } }
     ]
   },
   {
     path: 'cliente',
     children: [
-      { path: 'list', component: ClienteComponent },
-      { path: 'create', component: ClienteCreateComponent },
-      { path: 'edit/:idcliente', component: ClienteCreateComponent }
+      { path: 'list', component: ClienteComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } },
+      { path: 'create', component: ClienteCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } },
+      { path: 'edit/:idcliente', component: ClienteCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } },
+      //Componentes para pago
+      { path: 'busqueda', component: ClienteBusquedaComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } },
+      { path: 'deudas/:id', component: DeudaListadoComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } },
+      { path: 'pago', component: PagoComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } }
     ]
   },
   {
     path: 'producto_final',
     children: [
-      { path: 'list', component: ProductoFinalComponent },
-      { path: 'create', component: ProductoFinalCreateComponent }
+      { path: 'list', component: ProductoFinalComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } },
+      { path: 'create', component: ProductoFinalCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin', 'stock'] } }
     ]
   },
   {
     path: 'venta',
     children: [
-      { path: 'list', component: VentaComponent },
-      { path: 'create', component: VentaCreateComponent }
+      { path: 'list', component: VentaComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } },
+      { path: 'create', component: VentaCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } }
     ]
   },
   {
     path: 'total_venta',
     children: [
-      { path: 'list', component: VentaTotalComponent },
-      { path: 'create', component: VentaCreateComponent }
+      { path: 'list', component: VentaTotalComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } },
+      { path: 'create', component: VentaCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } }
     ]
+
   },
   { path: '**', redirectTo: '' },
 ];

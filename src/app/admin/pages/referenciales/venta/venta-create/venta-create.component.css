@@ -1,7 +1,9 @@
 
 .borde{
-  box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
-  border-radius: 2px;
+  --box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
+  border: 1px solid #eaeaea; /* Color de borde claro */
+  --border-radius: 10px; /* Radio del borde */
+  --border-radius: 2px;
 }
 
 
@@ -36,4 +38,76 @@
 .avatar-uploader{
   width: 100%;
   text-align: center;
+}
+
+/*Aqui va el css del carrito de compra*/
+.product-list {
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espacio entre las tarjetas */
+  height: 47vh; /* Ajusta según tus necesidades */
+  overflow-y: auto; /* Habilita el scroll vertical */
+  border: 1px solid #eaeaea;
+}
+
+.product-card {
+  border-radius: 8px;
+  padding: 16px;
+  width: 100%; /* Ocupa el 100% del ancho */
+  box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.3);
+  --background-color: #f98736; /* Color pastel inicial */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+}
+
+.product-card:hover {
+  --background-color: #fbc68a; /* Color pastel al pasar el cursor */
+  box-shadow: 8px 16px 32px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+  cursor: pointer; /* Cambia el cursor para indicar interactividad */
+}
+
+.product-info h3 {
+  width: 100%; /* Toma toda la fila */
+  margin-bottom: 8px; /* Espacio reducido debajo del nombre */
+}
+
+.product-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Espacio reducido entre las filas de detalles */
+  flex: 1;
+}
+
+.left-column .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px; /* Espacio reducido entre las columnas */
+}
+
+.left-column p {
+  margin: 2px 0; /* Espacio reducido entre los párrafos */
+}
+
+.right-column {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 50px; /* Espacio pequeño para el icono de borrado */
+}
+
+.product-actions {
+  text-align: right;
+}
+
+.totals {
+  --padding: 10px;
+  --margin-top: 16px;
+  --margin-right: 20px;
+  text-align: right;
+  border: 1px solid #eaeaea; /* Color de borde claro */
 }

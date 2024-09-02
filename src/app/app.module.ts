@@ -41,6 +41,9 @@ import { ProductoFinalCreateComponent } from './admin/pages/referenciales/produc
 import { VentaComponent } from './admin/pages/referenciales/venta/venta.component';
 import { VentaCreateComponent } from './admin/pages/referenciales/venta/venta-create/venta-create.component';
 import { VentaTotalComponent } from './admin/pages/referenciales/venta/total-venta/venta-total.component';
+import { ClienteBusquedaComponent } from './admin/pages/referenciales/pago/cliente-busqueda/cliente-busqueda.component';
+import { DeudaListadoComponent } from './admin/pages/referenciales/pago/deuda-listado/deuda-listado.component';
+import { PagoComponent } from './admin/pages/referenciales/pago/pago.component';
 registerLocaleData(es);
 
 export const authCodeFlowConfig: AuthConfig = {
@@ -54,6 +57,8 @@ export const authCodeFlowConfig: AuthConfig = {
   //dummyClientSecret:environment.keycloakConfig.clave
 };
 
+
+
 function initializeOAuth(oauthService: OAuthService): Promise<void> {
   return new Promise((resolve) => {
     oauthService.configure(authCodeFlowConfig);
@@ -62,6 +67,8 @@ function initializeOAuth(oauthService: OAuthService): Promise<void> {
       .then(() => resolve());
   });
 }
+
+
 
 @NgModule({
   declarations: [
@@ -92,7 +99,10 @@ function initializeOAuth(oauthService: OAuthService): Promise<void> {
     ProductoFinalCreateComponent,
     VentaComponent,
     VentaCreateComponent,
-    VentaTotalComponent
+    VentaTotalComponent,
+    ClienteBusquedaComponent,
+    DeudaListadoComponent,
+    PagoComponent
   ],
   imports: [
     BrowserModule,

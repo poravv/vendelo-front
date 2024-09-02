@@ -1,7 +1,8 @@
 export const environment = {
     production: false,
     apiUrl: 'https://kc.mindtechpy.net/admin/realms/realm_vendelo',
-    serverUrl: 'http://localhost:3002/sisweb/api',
+    //serverUrl: 'http://localhost:3002/vendelo/api',
+    serverUrl: 'http://back.mindtechpy.net/vendelo/vendelo/api',
     keycloakConfig: {
         clientId:"client-vendelo",
         issuer: 'https://kc.mindtechpy.net/realms/realm_vendelo',
@@ -9,6 +10,5 @@ export const environment = {
         responseType: 'code',
         scope: 'openid profile',
         showDebugInformation: true,
-        //clave: 'R8QDxlT5BmeBoyw9KPXtMqjcD2P5DzCJ',
     }
   };

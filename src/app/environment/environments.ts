@@ -2,7 +2,7 @@ export const environment = {
     production: false,
     apiUrl: 'https://kc.mindtechpy.net/admin/realms/realm_vendelo',
     //serverUrl: 'http://localhost:3002/vendelo/api',
-    serverUrl: 'http://back.mindtechpy.net/vendelo/vendelo/api',
+    serverUrl: 'https://back.mindtechpy.net/vendelo/vendelo/api',
     keycloakConfig: {
         clientId:"client-vendelo",
         issuer: 'https://kc.mindtechpy.net/realms/realm_vendelo',

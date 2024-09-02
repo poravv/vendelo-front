@@ -12,8 +12,6 @@ import { Observable, Observer, Subscription } from 'rxjs';
 import { MessageService } from 'src/app/admin/utils/message.service';
 import { CiudadModel } from '../../ciudad/ciudad.component';
 import { CiudadService } from 'src/app/admin/services/ciudad/ciudad.service';
-import { NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
-import { Buffer } from 'buffer';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { SucursalService } from 'src/app/admin/services/sucursal/sucursal.service';
 
@@ -40,7 +38,7 @@ export class sucursalCreateComponent implements OnInit{
     private msg: NzMessageService
   ) {
     this.validateForm = this.fb.group({
-      descripcion: ['', [Validators.required], [this.userNameAsyncValidator]],
+      descripcion: ['', [Validators.required]],
       ruc: ['', [Validators.required]],
       direccion: ['', [Validators.required]],
       idciudad: ['', [Validators.required]],
@@ -53,6 +51,11 @@ export class sucursalCreateComponent implements OnInit{
   }
 
   submitForm(): void {
+    
+    this.validateForm.patchValue({
+      numero: 0
+    });
+
     this.sucursalService.createSucursal(this.validateForm.value).subscribe((response) => {
       //console.log(response);
       if (response.mensaje == 'error') {

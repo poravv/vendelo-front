@@ -2,7 +2,7 @@ version: '3.8'
 services:
   web:
     build: .
-    image: chatbot-front
-    container_name: contenedor-chatbot
+    image: vendelo-front
+    container_name: contenedor-vendelo-front
     ports:
       - "4002:4000"

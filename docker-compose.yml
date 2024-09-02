@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    image: chatbot-front
+    container_name: contenedor-chatbot
+    ports:
+      - "4002:4000"

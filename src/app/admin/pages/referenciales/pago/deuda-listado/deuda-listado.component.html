@@ -13,9 +13,9 @@
     <tbody>
       <tr *ngFor="let deuda of deudas">
         <td>{{ deuda.vencimiento }}</td>
-        <td>{{ deuda.monto_pago }}</td>
+        <td>{{ deuda.monto_pago | thousandsSeparator }}</td>
         <td>{{ deuda.cuota }}</td>
-        <td>{{ deuda.pagado }}</td>
+        <td>{{ deuda.pagado | thousandsSeparator }}</td>
         <td>{{ deuda.estado=='PP'?'Pendiente de pago':deuda.estado=='PAR'?'Pago parcial':'Pagado' }}</td>
         <td>
           <label nz-checkbox [(ngModel)]="deuda.selected"></label>

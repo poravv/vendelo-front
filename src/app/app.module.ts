@@ -44,6 +44,11 @@ import { VentaTotalComponent } from './admin/pages/referenciales/venta/total-ven
 import { ClienteBusquedaComponent } from './admin/pages/referenciales/pago/cliente-busqueda/cliente-busqueda.component';
 import { DeudaListadoComponent } from './admin/pages/referenciales/pago/deuda-listado/deuda-listado.component';
 import { PagoComponent } from './admin/pages/referenciales/pago/pago.component';
+import { AuthService } from './admin/services/auth/auth.service';
+import { DecimalPipe } from '@angular/common';
+import { ThousandsSeparatorPipe } from './admin/utils/separador-miles/separador-miles';
+
+
 registerLocaleData(es);
 
 export const authCodeFlowConfig: AuthConfig = {
@@ -102,7 +107,8 @@ function initializeOAuth(oauthService: OAuthService): Promise<void> {
     VentaTotalComponent,
     ClienteBusquedaComponent,
     DeudaListadoComponent,
-    PagoComponent
+    PagoComponent,
+    ThousandsSeparatorPipe
   ],
   imports: [
     BrowserModule,
@@ -117,6 +123,7 @@ function initializeOAuth(oauthService: OAuthService): Promise<void> {
     provideHttpClient(),
     provideOAuthClient(),
     provideAnimations(),
+    DecimalPipe,
     {
       provide: APP_INITIALIZER,
       useFactory: (oauthService: OAuthService) => {
@@ -126,7 +133,8 @@ function initializeOAuth(oauthService: OAuthService): Promise<void> {
       },
       multi: true,
       deps: [
-        OAuthService
+        OAuthService,
+        AuthService
       ]
     }
   ],

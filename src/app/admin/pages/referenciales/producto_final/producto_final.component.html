@@ -42,7 +42,7 @@
           <td>{{ data.idproducto_final }}</td>
           <td>{{ data.nombre }}</td>
           <td>{{ data.descripcion }}</td>
-          <td>{{ data.costo }}</td>
+          <td>{{ data.costo | thousandsSeparator }}</td>
           <td><app-image-decode [image]="data.img" /></td>
           <td>{{ data.tipo_iva }}</td>
           <td>{{ data.estado=="AC"?"Activo":"Inactivo" }}</td>

@@ -12,7 +12,7 @@
     <ul>
       <li *ngFor="let cliente of clientes" (click)="selectCliente(cliente)" class="cliente-item">
         <div class="cliente-card">
-          <p><b>Cliente:</b> {{ cliente.razon_social }} / <b>documento:</b> {{ cliente.ruc }} / <b>Fecha:</b> {{ cliente.fecha }} / <b>Total:</b> {{ cliente.total }}</p>
+          <p><b>Cliente:</b> {{ cliente.razon_social }} / <b>documento:</b> {{ cliente.ruc }} / <b>Fecha:</b> {{ cliente.fecha }} / <b>Total:</b> {{ cliente.total | thousandsSeparator }}</p>
         </div>
       </li>
     </ul>

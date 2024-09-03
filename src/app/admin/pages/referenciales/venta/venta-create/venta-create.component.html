@@ -36,7 +36,7 @@
                         <nz-form-label nz-label>Costo de envio</nz-form-label>
                         <nz-form-control nzErrorTip="Inserte un valor correcto!">
                             <nz-input-group>
-                                <input nz-input id="envio" formControlName="costo_envio" type="number" step="0.01" />
+                                <input nz-input id="envio" formControlName="costo_envio" type="text" step="0.01" (input)="formatNumber($event)" />
                             </nz-input-group>
                         </nz-form-control>
                     </nz-form-item>
@@ -64,7 +64,7 @@
                         <nz-form-label nz-label nzRequired>Precio</nz-form-label>
                         <nz-form-control nzErrorTip="Inserte un valor correcto!">
                             <nz-input-group>
-                                <input nz-input id="precio" formControlName="precio" type="number" step="0.01" />
+                                <input nz-input id="precio" formControlName="precio" type="text" step="0.01" (input)="formatNumber($event)"/>
                             </nz-input-group>
                         </nz-form-control>
                     </nz-form-item>
@@ -81,7 +81,7 @@
                         <nz-form-label nz-label>Descuento</nz-form-label>
                         <nz-form-control nzErrorTip="Inserte un valor correcto!">
                             <nz-input-group>
-                                <input nz-input id="descuento" formControlName="descuento" type="number" />
+                                <input nz-input id="descuento" formControlName="descuento" type="text" (input)="formatNumber($event)"/>
                             </nz-input-group>
                         </nz-form-control>
                     </nz-form-item>
@@ -104,13 +104,13 @@
                                 <div class="left-column">
                                     <div class="row">
                                         <p><strong>Cantidad:</strong> {{ venta.cantidad }}</p>
-                                        <p><strong>Precio:</strong> {{ separador(venta.producto.costo) }}</p>
-                                        <p><strong>Descuento:</strong> {{ separador(venta.descuento) }}</p>
+                                        <p><strong>Precio:</strong> {{ venta.producto.costo| thousandsSeparator }}</p>
+                                        <p><strong>Descuento:</strong> {{ venta.descuento| thousandsSeparator }}</p>
                                     </div>
                                     <div class="row">
                                         <p><strong>IVA:</strong> {{ venta.producto.tipo_iva }}%</p>
-                                        <p><strong>Monto IVA:</strong> {{ separador(venta.iva) }}</p>
-                                        <p><strong>Subtotal:</strong> {{ separador(venta.subtotal) }}</p>
+                                        <p><strong>Monto IVA:</strong> {{ venta.iva | thousandsSeparator }}</p>
+                                        <p><strong>Subtotal:</strong> {{ venta.subtotal | thousandsSeparator }}</p>
                                     </div>
                                 </div>
                                 <div class="right-column">
@@ -128,8 +128,8 @@
 
 
                 <div class="totals">
-                    <p><strong>Total IVA:</strong> {{ separador(totalIva) }}</p>
-                    <p><strong>Total General:</strong> {{ separador(totalGeneral) }}</p>
+                    <p><strong>Total IVA:</strong> {{ totalIva| thousandsSeparator }}</p>
+                    <p><strong>Total General:</strong> {{ totalGeneral| thousandsSeparator }}</p>
                     <nz-form-item style="width: 100%;">
                         <nz-form-control style="display: flex; align-items: end;">
                             <!--button nz-button nzType="primary" type="submit" (click)="submitForm()"

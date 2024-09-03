@@ -8,13 +8,12 @@ export class AuthService {
   
   constructor(private oauthService: OAuthService) {}
 
-  
   hasAnyRole(roles: string[]): boolean {
-    const userRoles = this.getUserRoles();  // Asegúrate de que este método obtenga los roles del usuario autenticado
+    const userRoles = this.getUserRoles();
     return roles.some(role => userRoles.includes(role));
   }
 
-  getUserRoles(): string {
+  getUserRoles(): string[] {
     const claims = this.oauthService.getIdentityClaims() as any;
     return claims ? claims.role : [];
   }

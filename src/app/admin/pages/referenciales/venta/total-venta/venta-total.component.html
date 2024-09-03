@@ -40,8 +40,8 @@
           <td>{{ data.cliente.razon_social }}</td>
           <td>{{ data.cliente.ruc }}</td>
           <td>{{ data.fecha }}</td>
-          <td>{{ data.iva_total }}</td>
-          <td>{{ data.total}}</td>
+          <td>{{ data.iva_total | thousandsSeparator }}</td>
+          <td>{{ data.total | thousandsSeparator }}</td>
           <td>{{ data.estado }}</td>
           <td>
             <a style="padding: 4px;" >Edit</a>

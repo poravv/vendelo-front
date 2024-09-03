@@ -8,14 +8,17 @@
         <b>Vencimiento:</b> {{ deuda.vencimiento }}
       </div>
       <div class="deuda-item">
-        <b>Monto a pagar:</b> {{ (deuda.monto_pago ?? 0) - (deuda.pagado ?? 0) }}
+        <b>Monto a pagar:</b> {{ (deuda.monto_pago ?? 0) - (deuda.pagado ?? 0) | thousandsSeparator }}
       </div>
       <nz-form-control nzErrorTip="Por favor, ingrese un monto válido">
-        <input nz-input id="monto_pago_{{ deuda.idpago }}" formControlName="monto_pago_{{ deuda.idpago }}" type="number" step="0.01" (input)="calcularVuelto(deuda)" />
+        <input nz-input id="monto_pago_{{ deuda.idpago }}" formControlName="monto_pago_{{ deuda.idpago }}" type="text" step="0.01" (input)="calcularVuelto(deuda)" (input)="formatNumber($event)" />
       </nz-form-control>
       <div *ngIf="deuda.vuelto??0 > 0" class="vuelto">
-        Vuelto: {{ deuda.vuelto | currency }}
+        Vuelto: {{ deuda.vuelto??0 | thousandsSeparator  }}
       </div>
+      <!--div *ngIf="deuda.vuelto??0 > 0" class="vuelto">
+        Vuelto: {{ deuda.vuelto | currency }}
+      </div-->
     </nz-form-item>
   </div>
   <button nz-button nzType="primary" type="submit" [disabled]="pagoForm.invalid">Procesar Pago</button>

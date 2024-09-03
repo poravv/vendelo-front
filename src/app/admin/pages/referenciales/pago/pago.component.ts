@@ -154,4 +154,9 @@ export class PagoComponent implements OnInit {
     }
   }
 
+  formatNumber(event: any) {
+    const value = event.target.value.replace(/\D/g, '');
+    event.target.value = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+  }
+
 }

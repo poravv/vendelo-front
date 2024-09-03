@@ -38,7 +38,7 @@
         <ng-container *ngIf="!editCache[data.idarticulo].edit; else editTemplate">
           <td>{{ data.idarticulo }}</td>
           <td>{{ data.descripcion }}</td>
-          <td>{{ data.precio }}</td>
+          <td>{{ data.precio | thousandsSeparator }}</td>
           <td>{{ data.peso }}</td>
           <td>{{ data.proveedor.razon_social }}</td>
           <td><app-image-decode [image]="data.img" /></td>

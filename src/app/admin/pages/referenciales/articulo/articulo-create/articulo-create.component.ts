@@ -22,7 +22,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   templateUrl: './articulo-create.component.html',
   styleUrls: ['./articulo-create.component.css'],
 })
-export class ArticuloCreateComponent implements OnInit{
+export class ArticuloCreateComponent implements OnInit {
   selectedValue = null;
   validateForm: FormGroup;
   proveedores: ProveedorModel[] = [];
@@ -44,7 +44,7 @@ export class ArticuloCreateComponent implements OnInit{
       precio: ['', [Validators.required]],
       peso: ['', [Validators.required]],
       idproveedor: ['', [Validators.required]],
-      img: ['',[Validators.required]],
+      img: ['', [Validators.required]],
       estado: ['', [Validators.required]],
     });
   }
@@ -100,68 +100,73 @@ export class ArticuloCreateComponent implements OnInit{
       }, 1000);
     });
 
-    private getBase64(img: File, callback: (img: string) => void): void {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => callback(reader.result!.toString()));
-      reader.readAsDataURL(img);
-    }
-  
-  
-    decodeImage(imagen:any){
-      const base64String = Buffer.from(imagen.data).toString('ascii');
-      this.avatarUrl = base64String;
-    }
+  private getBase64(img: File, callback: (img: string) => void): void {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result!.toString()));
+    reader.readAsDataURL(img);
+  }
 
-    handleChange(info: { file: NzUploadFile }): void {
-      switch (info.file.status) {
-        case 'uploading':
-          this.loading = true;
-          break;
-        default:
-          this.getBase64(info.file!.originFileObj!, (img: string) => {
-            this.loading = false;
-            this.avatarUrl = img;
-          });
-          break;
-      }
-    }
 
-    beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]): Observable<boolean> =>
-      new Observable((observer: Observer<boolean>) => {
-        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-        if (!isJpgOrPng) {
-          this.msg.error('Tu archivo no es un jpeg o png!');
-          observer.complete();
-          return;
-        }
-        const isLt2M = file.size! / 1024 / 1024 < 2;
-        if (!isLt2M) {
-          this.msg.error('Image must smaller than 2MB!');
-          observer.complete();
-          return;
-        }
-        observer.next(isJpgOrPng && isLt2M);
+  decodeImage(imagen: any) {
+    const base64String = Buffer.from(imagen.data).toString('ascii');
+    this.avatarUrl = base64String;
+  }
+
+  handleChange(info: { file: NzUploadFile }): void {
+    switch (info.file.status) {
+      case 'uploading':
+        this.loading = true;
+        break;
+      default:
+        this.getBase64(info.file!.originFileObj!, (img: string) => {
+          this.loading = false;
+          this.avatarUrl = img;
+        });
+        break;
+    }
+  }
+
+  beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]): Observable<boolean> =>
+    new Observable((observer: Observer<boolean>) => {
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      if (!isJpgOrPng) {
+        this.msg.error('Tu archivo no es un jpeg o png!');
         observer.complete();
+        return;
+      }
+      const isLt2M = file.size! / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.msg.error('Image must smaller than 2MB!');
+        observer.complete();
+        return;
+      }
+      observer.next(isJpgOrPng && isLt2M);
+      observer.complete();
+    });
+
+  customUploadReq = (item: NzUploadXHRArgs) => {
+    const file = item.file as NzUploadFile;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      // Aquí puedes manejar la cadena base64 como necesites
+      this.image = base64;
+      //this.personaData.photo = base64;
+      this.validateForm.patchValue({
+        img: base64
       });
 
-      customUploadReq = (item: NzUploadXHRArgs) => {
-        const file = item.file as NzUploadFile;
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64 = reader.result as string;
-          // Aquí puedes manejar la cadena base64 como necesites
-          this.image = base64;
-          //this.personaData.photo = base64;
-          this.validateForm.patchValue({
-            img: base64
-          });
-    
-          if (item.onSuccess) {
-            item.onSuccess({}, item.file, {});
-          }
-        }
-        reader.readAsDataURL(file as unknown as Blob);
-        return new Subscription();
+      if (item.onSuccess) {
+        item.onSuccess({}, item.file, {});
       }
+    }
+    reader.readAsDataURL(file as unknown as Blob);
+    return new Subscription();
+  }
+
+  formatNumber(event: any) {
+    const value = event.target.value.replace(/\D/g, '');
+    event.target.value = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+  }
 
 }

@@ -8,32 +8,31 @@ import { AuthService } from '../services/auth/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  role: string | null = null;
-  constructor(private oauthService: OAuthService,private authService: AuthService) { }
+  roles: string[] = [];
+
+  constructor(private oauthService: OAuthService, private authService: AuthService) { }
 
   logout() {
     this.oauthService.logOut();
   }
 
- 
   ngOnInit(): void {
-    this.role = this.authService.getUserRoles(); 
+    this.roles = this.authService.getUserRoles();
   }
 
   isAdmin(): boolean {
-    return this.role === 'admin';
+    return this.roles.includes('admin');
   }
 
   isSales(): boolean {
-    return this.role === 'stock';
+    return this.roles.includes('stock');
   }
 
   hasRole(role: string): boolean {
-    return this.role === role;
+    return this.roles.includes(role);
   }
 
   hasAnyRole(roles: string[]): boolean {
-    return roles.includes(this.role!);
+    return this.authService.hasAnyRole(roles);
   }
-  
 }

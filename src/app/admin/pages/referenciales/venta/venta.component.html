@@ -39,8 +39,8 @@
           <td>{{ data.cliente.razon_social }}</td>
           <td>{{ data.cliente.ruc }}</td>
           <td>{{ data.fecha }}</td>
-          <td>{{ data.iva_total }}</td>
-          <td>{{ data.total}}</td>
+          <td>{{ data.iva_total | thousandsSeparator }}</td>
+          <td>{{ data.total | thousandsSeparator }}</td>
           <td>{{ data.tipo_venta == "CR" ? "Crédito":"Débito"}}</td>
           <td>{{ data.estado }}</td>
           <td>
@@ -67,7 +67,7 @@
           <td>{{ data.cuota }}</td>
           <td>{{ data.vencimiento }}</td>
           <td>{{ data.fecha_pago }}</td>
-          <td>{{ data.monto_pago }}</td>
+          <td>{{ data.monto_pago??0 | thousandsSeparator }}</td>
           <td>{{ data.pagado }}</td>
           <td>{{ data.estado=='PP'?'Pendiente de pago':data.estado=='PAR'?'Pago parcial':'Pagado' }}</td>
         </ng-container>
@@ -92,9 +92,9 @@
           <ng-container>
             <td>{{ data.producto_final.nombre }}</td>
             <td>{{ data.cantidad }}</td>
-            <td>{{ data.descuento }}</td>
-            <td>{{ data.producto_final.costo }}</td>
-            <td>{{ data.subtotal }}</td>
+            <td>{{ data.descuento | thousandsSeparator }}</td>
+            <td>{{ data.producto_final.costo | thousandsSeparator }}</td>
+            <td>{{ data.subtotal | thousandsSeparator }}</td>
           </ng-container>
         </tr>
       </tbody>

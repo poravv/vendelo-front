@@ -20,23 +20,27 @@
                             </nz-input-group>
                         </nz-form-control>
                     </nz-form-item>
+
                     <nz-form-item nz-item>
                         <nz-form-label nz-label nzRequired>Clientes</nz-form-label>
                         <nz-form-control nzErrorTip="Inserte un valor correcto!">
                             <nz-select class="options" name="cliente" nzShowSearch nzAllowClear
-                                nzPlaceHolder="Seleccione cliente" formControlName="idcliente">
-                                <nz-option *ngFor="let cliente of clientes" [nzValue]="cliente.idcliente"
-                                    nzLabel={{cliente.razon_social}}>
+                                nzPlaceHolder="Seleccione cliente" formControlName="idcliente"
+                                (nzOnSearch)="onSearch($event)">
+                                <nz-option *ngFor="let cliente of filteredClientes" [nzValue]="cliente.idcliente"
+                                    [nzLabel]="cliente.razon_social + ' (' + cliente.ruc + ')'">
                                 </nz-option>
                             </nz-select>
                         </nz-form-control>
                     </nz-form-item>
 
+
                     <nz-form-item nz-item>
                         <nz-form-label nz-label>Costo de envio</nz-form-label>
                         <nz-form-control nzErrorTip="Inserte un valor correcto!">
                             <nz-input-group>
-                                <input nz-input id="envio" formControlName="costo_envio" type="text" step="0.01" (input)="formatNumber($event)" />
+                                <input nz-input id="envio" formControlName="costo_envio" type="text" step="0.01"
+                                    (input)="formatNumber($event)" />
                             </nz-input-group>
                         </nz-form-control>
                     </nz-form-item>
@@ -64,7 +68,8 @@
                         <nz-form-label nz-label nzRequired>Precio</nz-form-label>
                         <nz-form-control nzErrorTip="Inserte un valor correcto!">
                             <nz-input-group>
-                                <input nz-input id="precio" formControlName="precio" type="text" step="0.01" (input)="formatNumber($event)"/>
+                                <input nz-input id="precio" formControlName="precio" type="text" step="0.01"
+                                    (input)="formatNumber($event)" />
                             </nz-input-group>
                         </nz-form-control>
                     </nz-form-item>
@@ -81,12 +86,14 @@
                         <nz-form-label nz-label>Descuento</nz-form-label>
                         <nz-form-control nzErrorTip="Inserte un valor correcto!">
                             <nz-input-group>
-                                <input nz-input id="descuento" formControlName="descuento" type="text" (input)="formatNumber($event)"/>
+                                <input nz-input id="descuento" formControlName="descuento" type="text"
+                                    (input)="formatNumber($event)" />
                             </nz-input-group>
                         </nz-form-control>
                     </nz-form-item>
                     <nz-form-control style="width: 100%;display: flex; align-items: start;">
-                        <button nzTooltipTitle="Refrescar listas" nzTooltipPlacement="top" nz-tooltip nz-button nzType="default" (click)="refreshProductList($event)">
+                        <button nzTooltipTitle="Refrescar listas" nzTooltipPlacement="top" nz-tooltip nz-button
+                            nzType="default" (click)="refreshProductList($event)">
                             <span style="font-size: 24px;" nz-icon nzType="redo" nzTheme="outline"></span>
                         </button>
                         <button [disabled]="validateForm.invalid" nz-button nzType="primary">

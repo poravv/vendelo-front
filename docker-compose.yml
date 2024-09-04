@@ -1,7 +1,7 @@
 services:
-  web:
+  web_vendelo:
     build: .
-    image: dolce-front
-    container_name: contenedor-dolce-front
+    image: vendelo-front
+    container_name: contenedor-vendelo-front
     ports:
-      - "4003:4000"
+      - "4002:4000"

@@ -1,5 +1,5 @@
 services:
-  web_vendelo:
+  web:
     build: .
     image: vendelo-front
     container_name: contenedor-vendelo-front

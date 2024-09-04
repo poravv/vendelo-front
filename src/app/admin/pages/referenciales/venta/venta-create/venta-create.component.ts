@@ -41,6 +41,7 @@ export class VentaCreateComponent implements OnInit {
   tblVentas: any[] = [];
   productosFinales: any[] = [];
   clientes: ClienteModel[] = [];
+  filteredClientes : ClienteModel[] = [];
   modalIsVisible = false;
   modalCliente = false;
   value: number = 0;
@@ -216,6 +217,13 @@ export class VentaCreateComponent implements OnInit {
         //console.log(this.proveedores)
       },
     });
+    
+  }
+  onSearch(value: string): void {
+    this.filteredClientes = this.clientes.filter(cliente =>
+      cliente.razon_social.toLowerCase().includes(value.toLowerCase()) ||
+      cliente.ruc.includes(value)
+    );
   }
 
   resetForm(e: MouseEvent): void {

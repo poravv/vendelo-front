@@ -165,8 +165,10 @@ export class ArticuloCreateComponent implements OnInit {
   }
 
   formatNumber(event: any) {
-    const value = event.target.value.replace(/\D/g, '');
-    event.target.value = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+    const value = event.target.value.replace(/\D/g, ''); // Eliminar cualquier carácter que no sea dígito
+    if (value) {
+      event.target.value = new Intl.NumberFormat('es-ES').format(parseInt(value, 10));
+    }
   }
 
 }

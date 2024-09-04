@@ -13,5 +13,5 @@ WORKDIR /app
 COPY --from=build /app/dist/vendelo-front /usr/share/nginx/html
 COPY --from=build /app/dist/vendelo-front /app
 RUN npm install -g http-server
-EXPOSE 4002
+EXPOSE 4003
 CMD ["http-server", "/app", "-p", "4000"]

@@ -110,7 +110,7 @@ export class InventarioComponent implements OnInit {
   getAllInventario() {
     this.inventarioService.getInventarioSucursal().subscribe({
       next: (response) => {
-        console.log(response);
+        //console.log(response);
         if (response) {
           response.body.map((data: InventarioModel) => {
             this.listOfData.push(data);

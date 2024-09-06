@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CuotaService } from 'src/app/admin/services/cuota/cuota.service';
 import { MessageService } from 'src/app/admin/utils/message.service';
+import { agregarSeparadorMiles } from 'src/app/admin/utils/separador-miles/agregarSeparadorMiles';
+import { TicketService } from 'src/app/admin/utils/ticket/ticket.service';
+import { datos_negocio } from 'src/assets/datos-negocio';
 
 export interface Deuda {
   idpago: number;
@@ -27,8 +30,15 @@ export class PagoComponent implements OnInit {
   pagoForm: FormGroup;
   deudasSeleccionadas: Deuda[] = [];
   state!: any;
+  negocio = datos_negocio;
 
-  constructor(private fb: FormBuilder, private router: Router, private cuotaService: CuotaService, private messageService: MessageService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private cuotaService: CuotaService,
+    private messageService: MessageService,
+    private ticketService: TicketService
+  ) {
     this.pagoForm = this.fb.group({});
     const navigation = this.router.getCurrentNavigation();
     this.state = navigation?.extras.state as { deudas: Deuda[] };
@@ -40,8 +50,6 @@ export class PagoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.state);
-
     if (this.state) {
       this.deudasSeleccionadas = this.state.deudas;
 
@@ -73,20 +81,32 @@ export class PagoComponent implements OnInit {
 
       this.cuotaService.procesarPagos(pagos).subscribe(
         response => {
-          console.log('Pagos procesados:', response);
+          //console.log('Pagos procesados:', response);
           if (response?.mensaje != 'error') {
+
             //alert('');
             // Generar ticket para impresión
             // Generar ticket para impresión
+
             const ticketData = {
-              negocio: 'Mauricio Aguilar',
+
+              negocio: this.negocio.negocio,
+              duenho: this.negocio.propietario,
+              direccion: this.negocio.direccion,
+              telefono: this.negocio.telefono,
+              email: this.negocio.email,
+              numeroPedido: response.body.venta.idventa,
+              correo_cli: response.body.venta.cliente.correo,
+              direccion_cli: response.body.venta.cliente.direccion,
               fecha: new Date().toLocaleDateString(),
+              hora: new Date().toLocaleTimeString(),
               cliente: response.body.venta.cliente.razon_social,
               ruc: response.body.venta.cliente.ruc,
               cuotas: response.body.pagos.map((rs: any) => ({
                 cuotaNumero: rs.cuota,
-                montoPagado: rs.pagado,
-                montoPendiente: rs.monto_pago -rs.pagado,
+                montoPagado: agregarSeparadorMiles(rs.pagado),
+                montoPendiente: agregarSeparadorMiles(rs.monto_pago - rs.pagado),
+                total: agregarSeparadorMiles(rs.monto_pago),
                 vencimiento: rs.vencimiento
               }))
             };
@@ -113,45 +133,7 @@ export class PagoComponent implements OnInit {
   }
 
   mostrarTicket(ticketData: any) {
-    // Crea una nueva ventana para la impresión
-    const printWindow = window.open('', '_blank', 'width=600,height=600');
-
-    if (printWindow) {
-      let cuotasHtml = ticketData.cuotas.map((cuota: any) => `
-        <p>Cuota Número: ${cuota.cuotaNumero}</p>
-        <p>Monto Pagado: ${cuota.montoPagado}</p>
-        <p>Monto Pendiente: ${cuota.montoPendiente}</p>
-        <p>Vencimiento: ${cuota.vencimiento}</p>
-        <hr>
-      `).join('');
-
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Imprimir Ticket</title>
-            <style>
-              /* Aquí puedes agregar estilos específicos para la impresión */
-              body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-              h2 { text-align: center; }
-              p { margin: 5px 0; }
-              hr { border: 0; border-top: 1px solid #ccc; margin: 10px 0; }
-            </style>
-          </head>
-          <body>
-            <h2>${ticketData.negocio}</h2>
-            <p>Fecha: ${ticketData.fecha}</p>
-            <p>Cliente: ${ticketData.cliente}</p>
-            <p>RUC: ${ticketData.ruc}</p>
-            ${cuotasHtml}
-          </body>
-        </html>
-      `);
-
-      printWindow.document.close(); // Cierra el flujo de escritura del documento
-      printWindow.focus(); // Asegura que la ventana tenga el foco
-      printWindow.print(); // Llama al cuadro de diálogo de impresión
-      printWindow.close(); // Cierra la ventana después de imprimir
-    }
+    this.ticketService.mostrarTicketPago(ticketData);
   }
 
   formatNumber(event: any) {
@@ -160,5 +142,6 @@ export class PagoComponent implements OnInit {
       event.target.value = new Intl.NumberFormat('es-ES').format(parseInt(value, 10));
     }
   }
+  
 
 }

@@ -79,7 +79,7 @@ export class DeleteMasivoComponent implements OnInit {
     for (let i = 0; i < this.entidad.length; i++) {
       // Lógica para crear el registro (simulada con espera)
       await this.simularEspera(50); // Espera de 100 ms (ajusta según tus necesidades)
-      console.log(this.type)
+      //console.log(this.type)
       this.deleteMasivoService.delete(this.entidad[i], this.type).subscribe((response) => {
         //console.log(response);
         if (response.mensaje == 'error') {

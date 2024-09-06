@@ -120,7 +120,7 @@ export class sucursalComponent implements OnInit {
   anulaRow(idsucursal:string):void {
     const index = this.listOfData.findIndex(item => item.idsucursal === idsucursal);
     this.listOfData[index].estado="IN"
-    console.log(this.listOfData[index]);
+    //console.log(this.listOfData[index]);
     this.sucursalService.updateSucursal(this.listOfData[index]).subscribe((response) => {
       //console.log(response);
       if (response.mensaje == 'error') {
@@ -138,7 +138,7 @@ export class sucursalComponent implements OnInit {
   getAllSucursal() {
     this.sucursalService.getSucursal().subscribe({
       next: (response) => {
-        console.log(response)
+        //console.log(response)
         if (response) {
           response.body.map((data: sucursalModel) => {
             this.listOfData.push(data);

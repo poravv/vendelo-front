@@ -8,10 +8,16 @@
                     <nz-form-item nz-item>
                         <nz-form-label nz-label nzRequired>Tipo de Venta</nz-form-label>
                         <nz-radio-group formControlName="tipo_venta">
-                            <label nz-radio nzValue="CO">Contado</label>
-                            <label nz-radio nzValue="CR">Credito</label>
+                          <label nz-radio nzValue="CO">
+                            <i nz-icon nzType="dollar" nzTheme="outline" [ngStyle]="{ color: selectedValue === 'CO' ? 'blue' : 'black' }"></i>
+                            Contado
+                          </label>
+                          <label nz-radio nzValue="CR">
+                            <i nz-icon nzType="credit-card" nzTheme="outline" [ngStyle]="{ color: selectedValue === 'CR' ? 'green' : 'black' }"></i>
+                            Crédito
+                          </label>
                         </nz-radio-group>
-                    </nz-form-item>
+                      </nz-form-item>
                     <nz-form-item nz-item *ngIf="saveForm.get('tipo_venta')?.value === 'CR'">
                         <nz-form-label nz-label nzRequired>Cantidad cuotas</nz-form-label>
                         <nz-form-control nzErrorTip="Inserte un valor correcto!">
@@ -20,7 +26,6 @@
                             </nz-input-group>
                         </nz-form-control>
                     </nz-form-item>
-
                     <nz-form-item nz-item>
                         <nz-form-label nz-label nzRequired>Clientes</nz-form-label>
                         <nz-form-control nzErrorTip="Inserte un valor correcto!">
@@ -33,9 +38,20 @@
                             </nz-select>
                         </nz-form-control>
                     </nz-form-item>
-
-
                     <nz-form-item nz-item>
+                        <nz-form-label nz-label nzRequired>Servicio</nz-form-label>
+                        <nz-radio-group formControlName="retiro">
+                          <label nz-radio nzValue="pickup">
+                            <i nz-icon nzType="car" nzTheme="outline" [ngStyle]="{ color: selectedValue === 'pickup' ? 'blue' : 'black' }"></i>
+                            Pick up
+                          </label>
+                          <label nz-radio nzValue="delivery">
+                            <i nz-icon nzType="shopping" nzTheme="outline" [ngStyle]="{ color: selectedValue === 'delivery' ? 'green' : 'black' }"></i>
+                            Delivery
+                          </label>
+                        </nz-radio-group>
+                      </nz-form-item>
+                    <nz-form-item nz-item *ngIf="saveForm.get('retiro')?.value === 'delivery'">
                         <nz-form-label nz-label>Costo de envio</nz-form-label>
                         <nz-form-control nzErrorTip="Inserte un valor correcto!">
                             <nz-input-group>

@@ -91,7 +91,7 @@ export class ProductoFinalCreateComponent implements OnInit {
 
 
   updateCantidad(idarticulo: any, e: any) {
-    console.log(e.target.value)
+    //console.log(e.target.value)
     const cantidad = e.target.value;
     const articuloIndex = this.selectedArticulos.findIndex(a => a.idarticulo === idarticulo);
     if (articuloIndex !== -1) {

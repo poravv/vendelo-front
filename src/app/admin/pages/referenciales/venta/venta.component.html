@@ -23,6 +23,7 @@
         <th>Total Iva</th>
         <th>Total</th>
         <th>Tipo de venta</th>
+        <th>Servicio</th>
         <th>Estado</th>
         <th></th> 
       </tr>
@@ -30,7 +31,6 @@
     <tbody>
       <ng-container *ngFor="let data of editRowTable.data">
         <tr>
-
           <td nzLeft [nzExpand]="expandSet.has(data.idventa)" (nzExpandChange)="onExpandChange(data.idventa, $event)">
           </td>
           <td nzLeft [nzExpand]="expandSetDetail.has(data.idventa)"
@@ -42,9 +42,11 @@
           <td>{{ data.iva_total | thousandsSeparator }}</td>
           <td>{{ data.total | thousandsSeparator }}</td>
           <td>{{ data.tipo_venta == "CR" ? "Crédito":"Contado"}}</td>
+          <td>{{ data.retiro }}</td>
           <td>{{ data.estado }}</td>
           <td>
-            <a style="padding: 4px;">Edit</a>
+            <a style="padding: 4px;" (click)="generaTicket(data)">Ticket</a>
+            <br/>
             <a style="padding: 4px;" nz-popconfirm nzPopconfirmTitle="Seguro que desea eliminar?"
               (nzOnConfirm)="anulaRow(data.idventa)">Anular</a>
           </td>

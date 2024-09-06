@@ -4,6 +4,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { ClienteModel } from '../cliente/cliente.component';
 import { VentaService } from 'src/app/admin/services/venta/venta.service';
 import { Deuda } from '../pago/pago.component';
+import { TicketService } from 'src/app/admin/utils/ticket/ticket.service';
+import { agregarSeparadorMiles } from 'src/app/admin/utils/separador-miles/agregarSeparadorMiles';
+import { NumeroALetrasService } from 'src/app/admin/utils/numero-a-letras/numero-a-letras.service';
+import { datos_negocio } from 'src/assets/datos-negocio';
 
 export interface VentaModel {
   idventa: number;
@@ -18,6 +22,7 @@ export interface VentaModel {
   cliente: ClienteModel;
   tipo_venta: string;
   cuota: number;
+  retiro: string;
   pagos: Deuda[];
   det_venta: any[];
 }
@@ -29,8 +34,16 @@ export interface VentaModel {
 })
 
 export class VentaComponent implements OnInit {
+  
+  negocio = datos_negocio;
 
-  constructor(private ventaService: VentaService, private messageService: MessageService, private msg: NzMessageService) { }
+  constructor(
+    private ventaService: VentaService,
+    private messageService: MessageService,
+    private msg: NzMessageService,
+    private ticketService: TicketService,
+    private numeroALetrasService: NumeroALetrasService
+  ) { }
 
   editCache: { [key: string]: { edit: boolean; data: VentaModel } } = {};
   listOfData: VentaModel[] = [];
@@ -114,6 +127,74 @@ export class VentaComponent implements OnInit {
     });
   }
 
+  generaTicket(data: any) {
+
+    //console.log('----->',data)
+
+    if(data.tipo_venta=="CR"){
+      const ticketData = {
+        negocio: this.negocio.negocio,
+        duenho: this.negocio.propietario,
+        direccion: this.negocio.direccion,
+        telefono: this.negocio.telefono,
+        email: this.negocio.email,
+        numeroPedido: data.idventa,
+        correo_cli: data.cliente.correo,
+        direccion_cli: data.cliente.direccion,
+        fecha: new Date().toLocaleDateString(),
+        hora: new Date().toLocaleTimeString(),
+        cliente: data.cliente.razon_social,
+        ruc: data.cliente.ruc,
+        det_venta: data.det_venta,
+        totalIva: agregarSeparadorMiles(data.iva_total),
+        delivery: agregarSeparadorMiles(Number(data.costo_envio)),
+        total: agregarSeparadorMiles(data.total),
+        totalGeneral: agregarSeparadorMiles(Number(data.costo_envio)+Number(data.total)),
+        situacionPedido: 'Pendiente',
+        numLetra: this.convertirNumeroALetras((Number(data.costo_envio)+Number(data.total))),
+        cuotas: data.pagos.map((rs: any) => ({
+          cuotaNumero: rs.cuota,
+          montoPagado: agregarSeparadorMiles(rs.pagado??0),
+          montoPendiente: agregarSeparadorMiles(rs.monto_pago - rs.pagado),
+          total: agregarSeparadorMiles(rs.monto_pago??0),
+          vencimiento: rs.vencimiento
+        }))
+      };
+
+      this.ticketService.mostrarTicketVentaCredito(ticketData);
+
+    }else{
+      const ticketData = {
+        negocio: this.negocio.negocio,
+        duenho: this.negocio.propietario,
+        direccion: this.negocio.direccion,
+        telefono: this.negocio.telefono,
+        email: this.negocio.email,
+        numeroPedido: data.idventa,
+        correo_cli: data.cliente.correo,
+        direccion_cli: data.cliente.direccion,
+        fecha: new Date().toLocaleDateString(),
+        hora: new Date().toLocaleTimeString(),
+        cliente: data.cliente.razon_social,
+        ruc: data.cliente.ruc,
+        det_venta: data.det_venta,
+        totalIva: agregarSeparadorMiles(data.iva_total),
+        delivery: agregarSeparadorMiles(Number(data.costo_envio)),
+        total: agregarSeparadorMiles(data.total),
+        totalGeneral: agregarSeparadorMiles(Number(data.costo_envio)+Number(data.total)),
+        situacionPedido: 'Pendiente',
+        numLetra: this.convertirNumeroALetras((Number(data.costo_envio)+Number(data.total)))
+      };
+      this.ticketService.mostrarTicketVenta(ticketData);
+    }
+
+    
+
+
+
+   
+  }
+
   anulaRow(idventa: number): void {
     const index = this.listOfData.findIndex(item => item.idventa === idventa);
     this.listOfData[index].estado = "IN"
@@ -128,6 +209,11 @@ export class VentaComponent implements OnInit {
     });
   }
 
+  convertirNumeroALetras(num: any): string {
+    return this.numeroALetrasService.NumeroALetras(Number(num));
+  }
+
+
   ngOnInit(): void {
     this.getAllVenta();
   }
@@ -136,7 +222,9 @@ export class VentaComponent implements OnInit {
     this.ventaService.getVentaUsuario().subscribe({
       next: (response) => {
         if (response) {
-          console.log(response.body)
+
+          //console.log(response.body)
+
           response.body.map((data: VentaModel) => {
             this.listOfData.push(data);
           });

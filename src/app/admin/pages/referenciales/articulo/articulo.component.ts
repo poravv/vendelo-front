@@ -121,7 +121,7 @@ export class ArticuloComponent implements OnInit {
   anulaRow(idarticulo:string):void {
     const index = this.listOfData.findIndex(item => item.idarticulo === idarticulo);
     this.listOfData[index].estado="IN"
-    console.log(this.listOfData[index]);
+    //console.log(this.listOfData[index]);
     this.articuloService.updateArticulo(this.listOfData[index]).subscribe((response) => {
       //console.log(response);
       if (response.mensaje == 'error') {

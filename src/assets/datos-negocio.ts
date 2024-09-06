@@ -1,7 +1,7 @@
 export const datos_negocio = {
-    negocio:"Mauricio Aguilar",
-    propietario:"",
-    email:"mauricioaguilar@gmail.com",
-    telefono:"098x-xxxxxx",
-    direccion:"Ciudad del Este - PY"
+    negocio:"Distribuidora",
+    propietario:"de Arturo Villasboa",
+    email:"arturovillasboat@gmail.com",
+    telefono:"0992 424757",
+    direccion:"Itaugua - Py"
 }

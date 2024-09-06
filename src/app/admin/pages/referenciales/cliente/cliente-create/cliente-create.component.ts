@@ -134,7 +134,7 @@ export class ClienteCreateComponent implements OnInit {
 
   update(): void {
 
-    console.log(this.validateForm.value)
+    //console.log(this.validateForm.value)
     
     this.clienteService.updateCliente(this.validateForm.value,this.idcliente).subscribe((response) => {
       //console.log(response);

@@ -24,7 +24,7 @@ export class DeudaListadoComponent implements OnInit {
 
   irAPagos(): void {
     const deudasSeleccionadas = this.deudas.filter(deuda => deuda.selected);
-    console.log(deudasSeleccionadas)
+    //console.log(deudasSeleccionadas)
     this.router.navigate(['/cliente/pago'], { state: { deudas: deudasSeleccionadas } });
     // Aquí puedes redirigir al componente de pagos con las deudas seleccionadas
   }

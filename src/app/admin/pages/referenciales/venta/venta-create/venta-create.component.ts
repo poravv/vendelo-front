@@ -74,9 +74,10 @@ export class VentaCreateComponent implements OnInit {
     this.saveForm = this.fb.group({
       idcliente: ['', Validators.required],
       tipo_venta: ['',Validators.required],
+      retiro: ['',Validators.required],
       costo_envio: [0],
       nro_comprobante: [''],
-      cuotas: [''],
+      cuotas: [0],
       comision: [''],
       iva_total: [''],
       total: [''],
@@ -156,7 +157,7 @@ export class VentaCreateComponent implements OnInit {
       }
 
       this.ventaService.operacionVenta(idproducto_final, 'venta', cantidad).subscribe((response) => {
-        console.log(response);
+        //console.log(response);
       });
 
       this.ventas = [...this.ventas, { idproducto_final, producto, cantidad, descuento, precio, subtotal, iva }];
@@ -169,7 +170,7 @@ export class VentaCreateComponent implements OnInit {
 
   extraeRow(venta: any) {
     this.ventaService.operacionVenta(venta.idproducto_final, 'retorno', venta.cantidad).subscribe((response) => {
-      console.log(response);
+      //console.log(response);
     });
 
     this.ventas = this.ventas.filter(d => d.idproducto_final !== venta.idproducto_final);
@@ -193,11 +194,12 @@ export class VentaCreateComponent implements OnInit {
       comision: 0
     });
 
+
     this.ventaService.createVenta(this.saveForm.value).subscribe((response) => {
-      //console.log(response);
       if (response.mensaje == 'error') {
         this.messageService.createMessage('error', response.detmensaje);
       } else {
+        this.volver();
         this.messageService.createMessage('success', response.detmensaje);
         this.validateForm.reset();
       }
@@ -231,8 +233,7 @@ export class VentaCreateComponent implements OnInit {
     this.validateForm.reset();
   }
 
-  volver(e: MouseEvent): void {
-    e.preventDefault();
+  volver(): void {
     this.router.navigateByUrl('/venta/list');
   }
 
@@ -351,6 +352,6 @@ export class VentaCreateComponent implements OnInit {
       event.target.value = new Intl.NumberFormat('es-ES').format(parseInt(value, 10));
     }
   }
-  
+
 
 }

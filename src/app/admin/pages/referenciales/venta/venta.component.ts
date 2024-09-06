@@ -149,9 +149,9 @@ export class VentaComponent implements OnInit {
         totalIva: agregarSeparadorMiles(data.iva_total),
         delivery: agregarSeparadorMiles(Number(data.costo_envio)),
         total: agregarSeparadorMiles(data.total),
-        totalGeneral: agregarSeparadorMiles(Number(data.costo_envio)+Number(data.total)),
+        totalGeneral: agregarSeparadorMiles(Number(data.total)),
         situacionPedido: 'Pendiente',
-        numLetra: this.convertirNumeroALetras((Number(data.costo_envio)+Number(data.total))),
+        numLetra: this.convertirNumeroALetras((Number(data.total))),
         cuotas: data.pagos.map((rs: any) => ({
           cuotaNumero: rs.cuota,
           montoPagado: agregarSeparadorMiles(rs.pagado??0),
@@ -181,9 +181,9 @@ export class VentaComponent implements OnInit {
         totalIva: agregarSeparadorMiles(data.iva_total),
         delivery: agregarSeparadorMiles(Number(data.costo_envio)),
         total: agregarSeparadorMiles(data.total),
-        totalGeneral: agregarSeparadorMiles(Number(data.costo_envio)+Number(data.total)),
+        totalGeneral: agregarSeparadorMiles(Number(data.total)),
         situacionPedido: 'Pendiente',
-        numLetra: this.convertirNumeroALetras((Number(data.costo_envio)+Number(data.total)))
+        numLetra: this.convertirNumeroALetras((Number(data.total)))
       };
       this.ticketService.mostrarTicketVenta(ticketData);
     }

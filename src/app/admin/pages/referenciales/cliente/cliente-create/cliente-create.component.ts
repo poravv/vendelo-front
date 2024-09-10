@@ -47,7 +47,7 @@ export class ClienteCreateComponent implements OnInit {
     this.idcliente = this.activatedRoute.snapshot.paramMap.get('idcliente') ?? "";
 
     this.validateForm = this.fb.group({
-      idcliente: [''],
+      idcliente: [0],
       razon_social: ['', [Validators.required]],
       ruc: ['', [Validators.required]],
       telefono: ['', [Validators.required]],

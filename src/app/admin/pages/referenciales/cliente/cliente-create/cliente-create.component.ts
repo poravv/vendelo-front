@@ -60,7 +60,7 @@ export class ClienteCreateComponent implements OnInit {
       idciudad: ['', [Validators.required]],
       tipo_cli: ['', [Validators.required]],
       sexo: [''],
-      comision: [''],
+      comision: [0.0],
       ciudad: [''],
     });
   }

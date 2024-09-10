@@ -116,6 +116,7 @@ export class VentaCreateComponent implements OnInit {
   }
 
   getAllClientes() {
+    this.clientes =[];
     this.clienteService.getCliente().subscribe({
       next: (response) => {
         //console.log(response)

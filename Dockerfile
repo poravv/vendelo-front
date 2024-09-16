@@ -12,5 +12,5 @@ FROM node:14-alpine
 WORKDIR /app
 COPY --from=build /app/dist/vendelo-front /app
 RUN npm install -g serve
-EXPOSE 4003
-CMD ["http-server", "/app", "-l", "4000"]
+EXPOSE 4000
+CMD ["serve", "-s", "/app", "-l", "4000"]

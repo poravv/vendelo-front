@@ -24,6 +24,7 @@
         <th>Total</th>
         <th>Tipo de venta</th>
         <th>Servicio</th>
+        <th>Delivery</th>
         <th>Estado</th>
         <th></th> 
       </tr>
@@ -43,6 +44,7 @@
           <td>{{ data.total | thousandsSeparator }}</td>
           <td>{{ data.tipo_venta == "CR" ? "Crédito":"Contado"}}</td>
           <td>{{ data.retiro }}</td>
+          <td>{{ data.costo_envio | thousandsSeparator }}</td>
           <td>{{ data.estado }}</td>
           <td>
             <a style="padding: 4px;" (click)="generaTicket(data)">Ticket</a>

@@ -187,11 +187,6 @@ export class VentaComponent implements OnInit {
       };
       this.ticketService.mostrarTicketVenta(ticketData);
     }
-
-    
-
-
-
    
   }
 
@@ -222,8 +217,6 @@ export class VentaComponent implements OnInit {
     this.ventaService.getVentaUsuario().subscribe({
       next: (response) => {
         if (response) {
-
-          //console.log(response.body)
 
           response.body.map((data: VentaModel) => {
             this.listOfData.push(data);

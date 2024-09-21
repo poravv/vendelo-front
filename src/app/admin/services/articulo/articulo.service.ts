@@ -22,6 +22,15 @@ export class ArticuloService {
     });
   }
 
+  getArticulosPage(page:number,pageSize:number):Observable<any> {
+    //console.log(this.oauthService.getAccessToken());
+    return this.httpClient.get(`${baseURL}/get?page=${page}&limit=${pageSize}`, {
+      headers: {
+        'Authorization': `Bearer ${this.oauthService.getAccessToken()}`,
+      }
+    });
+  }
+
   getArticuloByPk(idarticulo:string):Observable<any> {
     //console.log(this.oauthService.getAccessToken());
     return this.httpClient.get(`${baseURL}/get/${idarticulo}`, {

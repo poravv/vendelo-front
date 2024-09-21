@@ -49,6 +49,11 @@ export class InventarioComponent implements OnInit {
   isOkLoading = false;
   selectedInventario: InventarioModel | null = null;
 
+  //Para paginacion
+  totalItems = 0;
+  pageSize = 100;
+  pageIndex = 1;
+
   showModal(inventario: InventarioModel): void {
     this.selectedInventario = inventario;
     this.isVisible = true;
@@ -126,11 +131,11 @@ export class InventarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllInventario();
+    this.getAllInventario(this.pageIndex);
   }
 
-  getAllInventario() {
-    this.inventarioService.getInventarioSucursal().subscribe({
+  getAllInventario(page: number) {
+    this.inventarioService.getInventarioSucursalPage(page, this.pageSize).subscribe({
       next: (response) => {
         //console.log(response);
         if (response) {

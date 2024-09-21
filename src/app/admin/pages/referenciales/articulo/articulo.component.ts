@@ -40,6 +40,10 @@ export class ArticuloComponent implements OnInit {
   file?: string;
   image?: any;
 
+  //Para paginacion
+  pageSize = 100;
+  pageIndex = 1;
+
   //Modal
   isVisible = false;
   isOkLoading = false;
@@ -155,11 +159,11 @@ export class ArticuloComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllArticulo();
+    this.getAllArticulo(this.pageIndex);
   }
 
-  getAllArticulo() {
-    this.articuloService.getArticulo().subscribe({
+  getAllArticulo(page: number) {
+    this.articuloService.getArticulosPage(page, this.pageSize).subscribe({
       next: (response) => {
         if (response) {
           response.body.map((data: ArticuloModel) => {

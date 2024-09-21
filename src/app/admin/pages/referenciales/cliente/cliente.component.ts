@@ -44,6 +44,10 @@ export class ClienteComponent implements OnInit {
   isOkLoading = false;
   selectedCliente: ClienteModel | null = null;
 
+  //Para paginacion
+  pageSize = 100;
+  pageIndex = 1;
+
   showModal(cliente: ClienteModel): void {
     this.selectedCliente = cliente;
     this.isVisible = true;
@@ -122,11 +126,11 @@ export class ClienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllCliente();
+    this.getAllCliente(this.pageIndex);
   }
 
-  getAllCliente() {
-    this.clienteService.getCliente().subscribe({
+  getAllCliente(page: number) {
+    this.clienteService.getClientePage(page, this.pageSize).subscribe({
       next: (response) => {
         //console.log(response)
         if (response) {

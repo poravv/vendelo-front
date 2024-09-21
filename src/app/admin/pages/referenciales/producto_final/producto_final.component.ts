@@ -46,6 +46,11 @@ export class ProductoFinalComponent implements OnInit {
   listOfDisplayData: ProductoFinalModel[] = [];
   expandSet = new Set<number>();
 
+  //Para paginacion
+  totalItems = 0;
+  pageSize = 100;
+  pageIndex = 1;
+
   onExpandChange(id: number, checked: boolean): void {
     if (checked) {
       this.expandSet.add(id);
@@ -174,11 +179,11 @@ export class ProductoFinalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllProductoFinal();
+    this.getAllProductoFinal(this.pageIndex);
   }
 
-  getAllProductoFinal() {
-    this.producto_finalService.getProductoFinal().subscribe({
+  getAllProductoFinal(page: number) {
+    this.producto_finalService.getProductoFinalPage(page, this.pageSize).subscribe({
       next: (response) => {
         if (response) {
           //console.log(response)

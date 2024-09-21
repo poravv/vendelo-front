@@ -1,5 +1,5 @@
-<app-content-header [title]="'Inventario'" [exportExcel]="true"
-  [dataExport]="listOfDisplayData" [dataExportTitle]="'inventario'" [masivo]="true" [type]="'inventario'">
+<app-content-header [title]="'Inventario'" [exportExcel]="true" [dataExport]="listOfDisplayData"
+  [dataExportTitle]="'inventario'" [masivo]="true" [type]="'inventario'">
 </app-content-header>
 
 <div style="padding: 10px;">
@@ -10,19 +10,20 @@
     <i nz-icon nzType="search"></i>
   </ng-template>
 
-  <nz-table [nzScroll]="{ x: '1200px',y: '400px' }" #editRowTable nzBordered [nzData]="listOfDisplayData"
+  <nz-table [nzScroll]="{ x: '900px',y: '400px' }" #editRowTable nzBordered [nzData]="listOfDisplayData"
     nzTableLayout="fixed" nzSize="middle" nzShowPagination nzShowSizeChanger>
     <thead>
       <tr>
         <!--th nzWidth="30%">COLOR1</th-->
         <th nzLeft nzWidth="50px"></th>
-        <th>Id</th>
+        <th nzLeft nzWidth="50px"></th>
+        <!--th>Id</th-->
         <th>Sucursal</th>
         <th>Articulo</th>
         <th>Total</th>
         <th>Vendido</th>
-        <th>Foto</th>
-        <th>Notificar desde</th>
+        <!--th>Foto</th-->
+        <!--th>Notificar desde</th-->
         <th>Estado</th>
         <th></th>
       </tr>
@@ -32,13 +33,18 @@
         <tr>
           <td nzLeft [nzExpand]="expandSet.has(data.idinventario)"
             (nzExpandChange)="onExpandChange(data.idinventario, $event)"></td>
-          <td>{{ data.idinventario }}</td>
+          <td nzLeft>
+            <button nz-button nzType="link" (click)="showModal(data)">
+              <i nz-icon nzType="eye" nzTheme="outline"></i>
+            </button>
+          </td>
+          <!--td>{{ data.idinventario }}</td-->
           <td>{{ data.sucursal.descripcion }}</td>
           <td>{{ data.articulo.descripcion }}</td>
           <td>{{ data.cantidad_total }}</td>
           <td>{{ data.cantidad_ven }}</td>
-          <td><app-image-decode [image]="data.articulo.img" /></td>
-          <td>{{ data.notificar }}</td>
+          <!--td><app-image-decode [image]="data.articulo.img" /></td-->
+          <!--td>{{ data.notificar }}</td-->
           <td>{{ data.estado=="AC"?"Activo":"Inactivo" }}</td>
           <td>
             <a style="padding: 4px;" [routerLink]="['/inventario/create', data.idinventario,data.idarticulo]"
@@ -72,3 +78,26 @@
   </tbody>
   </nz-table>
 </div>
+
+
+<!--Modal-->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Detalles del Cliente" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading" nzWidth="600px">
+  <div *nzModalContent>
+    <div *ngIf="selectedInventario">
+      <p><strong>ID:</strong> {{ selectedInventario.idinventario }}</p>
+      <p><strong>Articulo:</strong> {{ selectedInventario.articulo.descripcion }}</p>
+      <p><strong>Total:</strong> {{ selectedInventario.cantidad_total }}</p>
+      <p><strong>Vendidos:</strong> {{ selectedInventario.cantidad_ven }}</p>
+      <p><strong>Sucursal:</strong> {{ selectedInventario.sucursal.descripcion }}</p>
+      <p><strong>Foto:</strong> <app-image-decode [image]="selectedInventario.articulo.img"></app-image-decode></p>
+      <p><strong>Estado:</strong>
+        <nz-tag
+          [nzColor]="selectedInventario.estado === 'AC' ? 'success' : selectedInventario.estado === 'IN' ? 'error' : 'warning'">
+          {{ selectedInventario.estado === 'AC' ? 'Activo' : selectedInventario.estado === 'IN' }}
+        </nz-tag>
+      </p>
+    </div>
+  </div>
+
+</nz-modal>

@@ -40,6 +40,28 @@ export class ArticuloComponent implements OnInit {
   file?: string;
   image?: any;
 
+  //Modal
+  isVisible = false;
+  isOkLoading = false;
+  selectedArticulo: ArticuloModel | null = null;
+
+  showModal(articulo: ArticuloModel): void {
+    this.selectedArticulo = articulo;
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 100);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
   startEdit(idarticulo: string): void {
     this.editCache[idarticulo].edit = true;
   }

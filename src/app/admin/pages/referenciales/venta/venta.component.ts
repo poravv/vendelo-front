@@ -223,7 +223,7 @@ export class VentaComponent implements OnInit {
       next: (response) => {
         if (response) {
 
-          //console.log(response.body)
+          console.log(response)
 
           response.body.map((data: VentaModel) => {
             this.listOfData.push(data);

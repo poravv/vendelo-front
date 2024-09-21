@@ -9,20 +9,21 @@
   <ng-template #suffixIconSearch>
     <i nz-icon nzType="search"></i>
   </ng-template>
-  <nz-table [nzScroll]="{ x: '1400px',y: '400px' }" #editRowTable nzBordered [nzData]="listOfDisplayData"
+  <nz-table [nzScroll]="{ x: '900px',y: '400px' }" #editRowTable nzBordered [nzData]="listOfDisplayData"
     nzTableLayout="fixed" nzSize="middle" nzShowPagination nzShowSizeChanger>
     <thead>
       <tr>
+        <th nzLeft nzWidth="60px"></th>
         <!--th nzWidth="30%">COLOR1</th-->
-        <th>Id</th>
+        <!--th>Id</th-->
         <th>Razon social</th>
         <th>Ruc</th>
         <th>Telefono</th>
-        <th>Direccion</th>
-        <th>Foto</th>
-        <th>Correo</th>
-        <th>Tipo</th>
-        <th>Sexo</th>
+        <!--th>Direccion</th-->
+        <!--th>Foto</th-->
+        <!--th>Correo</th-->
+        <!--th>Tipo</th-->
+        <!--th>Sexo</th-->
         <th>Ciudad</th>
         <th>Estado</th>
         <th></th>
@@ -31,15 +32,20 @@
     <tbody>
       <tr *ngFor="let data of editRowTable.data">
         <ng-container>
-          <td>{{ data.idcliente}}</td>
+          <td nzLeft>
+            <button nz-button  nzType="link" (click)="showModal(data)">
+              <i nz-icon nzType="eye" nzTheme="outline"></i>
+            </button>
+          </td>
+          <!--td>{{ data.idcliente}}</td-->
           <td>{{ data.razon_social}}</td>
           <td>{{ data.ruc}}</td>
           <td>{{ data.telefono}}</td>
-          <td>{{ data.direccion}}</td>
-          <td><app-image-decode [image]="data.img" /></td>
-          <td>{{ data.correo}}</td>
-          <td>{{ data.tipo_cli=="F"?"Fisico":"Juridico"}}</td>
-          <td>{{ data.sexo=="MA"?"Masculino":"Femenino"}}</td>
+          <!--td>{{ data.direccion}}</td-->
+          <!--td><app-image-decode [image]="data.img" /></td-->
+          <!--td>{{ data.correo}}</td-->
+          <!--td>{{ data.tipo_cli=="F"?"Fisico":"Juridico"}}</td-->
+          <!--td>{{ data.sexo=="MA"?"Masculino":"Femenino"}}</td-->
           <td>{{ data.ciudad.descripcion}}</td>
           <td>{{ data.estado=="AC"?"Activo":"Inactivo"}}</td>
           <td>
@@ -52,3 +58,26 @@
     </tbody>
   </nz-table>
 </div>
+
+<!--Modal-->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Detalles del Cliente" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading" nzWidth="600px">
+  <div *nzModalContent>
+    <div *ngIf="selectedCliente">
+      <p><strong>Razon social:</strong> {{ selectedCliente.razon_social }}</p>
+      <p><strong>Ruc/CI:</strong> {{ selectedCliente.ruc }}</p>
+      <p><strong>Teléfono:</strong> {{ selectedCliente.telefono }}</p>
+      <p><strong>Estado:</strong>
+        <nz-tag [nzColor]="selectedCliente.estado === 'AC' ? 'success' : selectedCliente.estado === 'IN' ? 'error' : 'warning'">
+          {{ selectedCliente.estado === 'AC' ? 'Activo' : selectedCliente.estado === 'IN'  }}
+        </nz-tag>
+      </p>
+      <p><strong>Tipo de cliente:</strong> {{ selectedCliente.tipo_cli=="F"?"Fisico":"Juridico" }}</p>
+      <p *ngIf="selectedCliente.sexo"><strong>Sexo:</strong> {{ selectedCliente.sexo === 'MA' ? 'Masculino' : 'Femenino' }}</p>
+      <p><strong>Dirección:</strong> {{ selectedCliente.direccion }}</p>
+      <!--p><strong>Foto:</strong> <app-image-decode [image]="selectedCliente.img"></app-image-decode></p-->
+      <p><strong>Correo:</strong> {{ selectedCliente.correo }}</p>
+    </div>
+  </div>
+
+</nz-modal>

@@ -59,6 +59,28 @@ export class ProductoFinalComponent implements OnInit {
   file?: string;
   image?: any;
 
+  //Modal
+  isVisible = false;
+  isOkLoading = false;
+  selectedProducto: ProductoFinalModel | null = null;
+
+  showModal(producto: ProductoFinalModel): void {
+    this.selectedProducto = producto;
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 100);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
   startEdit(idproducto_final: string): void {
     this.editCache[idproducto_final].edit = true;
   }

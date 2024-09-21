@@ -4,75 +4,109 @@
 
 <div style="padding: 10px;">
   <nz-input-group [nzSuffix]="suffixIconSearch">
-    <input type="text" #searchText nz-input placeholder="Buscador" Green
-      (keyup)="searchTotal(searchText.value)" />
+    <input type="text" #searchText nz-input placeholder="Buscador" Green (keyup)="searchTotal(searchText.value)" />
   </nz-input-group>
   <ng-template #suffixIconSearch>
     <i nz-icon nzType="search"></i>
   </ng-template>
-  
-  <nz-table 
-        [nzScroll]="{ x: '1100px',y: '400px' }"
-        #editRowTable 
-        nzBordered 
-        [nzData]="listOfDisplayData" 
-        nzTableLayout="fixed" 
-        nzSize="middle"
-        nzShowPagination
-        nzShowSizeChanger>
+
+  <nz-table [nzScroll]="{ x: '900px',y: '400px' }" #editRowTable nzBordered [nzData]="listOfDisplayData"
+    nzTableLayout="fixed" nzSize="middle" nzShowPagination nzShowSizeChanger>
     <thead>
       <tr>
         <!--th nzWidth="30%">COLOR1</th-->
         <th nzLeft nzWidth="50px"></th>
-        <th>Id</th>
+        <th nzLeft nzWidth="60px"></th>
+        <!--th>Id</th-->
         <th>Nombre</th>
         <th>Descripcion</th>
         <th>Costo</th>
-        <th>Foto</th>
-        <th>Tipo de Iva</th>
+        <!--th>Foto</th-->
+        <!--th>Tipo de Iva</th-->
         <th>Estado</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <ng-container *ngFor="let data of editRowTable.data">
-      <tr >
-        <td nzLeft [nzExpand]="expandSet.has(data.idproducto_final)"
+        <tr>
+          <td nzLeft [nzExpand]="expandSet.has(data.idproducto_final)"
             (nzExpandChange)="onExpandChange(data.idproducto_final, $event)"></td>
-          <td>{{ data.idproducto_final }}</td>
+          <td nzLeft>
+            <button nz-button nzType="link" (click)="showModal(data)">
+              <i nz-icon nzType="eye" nzTheme="outline"></i>
+            </button>
+          </td>
+          <!--td>{{ data.idproducto_final }}</td-->
           <td>{{ data.nombre }}</td>
           <td>{{ data.descripcion }}</td>
           <td>{{ data.costo | thousandsSeparator }}</td>
-          <td><app-image-decode [image]="data.img" /></td>
-          <td>{{ data.tipo_iva }}</td>
+          <!--td><app-image-decode [image]="data.img" /></td-->
+          <!--td>{{ data.tipo_iva }}</td-->
           <td>{{ data.estado=="AC"?"Activo":"Inactivo" }}</td>
           <td>
             <a style="padding: 4px;" nz-popconfirm nzPopconfirmTitle="Seguro que desea eliminar?"
               (nzOnConfirm)="anulaRow(data.idproducto_final)">Anular</a>
           </td>
+        </tr>
+        <tr [nzExpand]="expandSet.has(data.idproducto_final)">
+          <nz-table [nzData]="data.receta" #virtualTable [nzFrontPagination]="false" [nzShowPagination]="false">
+            <thead>
+              <tr>
+                <th>Articulo</th>
+                <th>Cantidad</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+    <tbody>
+      <tr *ngFor="let data of data.receta">
+        <ng-container>
+          <td>{{ data.articulo.descripcion }}</td>
+          <td>{{ data.cantidad }}</td>
+          <td>{{ data.receta_estado }}</td>
+        </ng-container>
       </tr>
-      <tr [nzExpand]="expandSet.has(data.idproducto_final)">
-        <nz-table [nzData]="data.receta" #virtualTable [nzFrontPagination]="false"
-          [nzShowPagination]="false">
-          <thead>
-            <tr>
-              <th>Articulo</th>
-              <th>Cantidad</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-  <tbody>
-    <tr *ngFor="let data of data.receta">
-      <ng-container>
-        <td>{{ data.articulo.descripcion }}</td>
-        <td>{{ data.cantidad }}</td>
-        <td>{{ data.receta_estado }}</td>
-      </ng-container>
-    </tr>
-  </tbody>
-</nz-table>
-</tr>
-    </ng-container>
     </tbody>
   </nz-table>
+  </tr>
+  </ng-container>
+  </tbody>
+  </nz-table>
 </div>
+
+
+<!--Modal-->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Detalles del Cliente" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading" nzWidth="600px">
+  <div *nzModalContent>
+    <div *ngIf="selectedProducto">
+      <p><strong>ID:</strong> {{ selectedProducto.idproducto_final }}</p>
+      <p><strong>Nombre:</strong> {{ selectedProducto.nombre }}</p>
+      <p><strong>Descripcion:</strong> {{ selectedProducto.descripcion }}</p>
+      <p><strong>Estado:</strong>
+        <nz-tag [nzColor]="selectedProducto.estado === 'AC' ? 'success' : selectedProducto.estado === 'IN' ? 'error' : 'warning'">
+          {{ selectedProducto.estado === 'AC' ? 'Activo' : selectedProducto.estado === 'IN'  }}
+        </nz-tag>
+      </p>
+      <p ><strong>Costo:</strong> {{ selectedProducto.costo | thousandsSeparator }}</p>
+      <p><strong>Iva:</strong> {{ selectedProducto.tipo_iva+"%" }}</p>
+      <p><strong>Foto:</strong> <app-image-decode [image]="selectedProducto.img"></app-image-decode></p>
+      <div><strong>Cantidades:</strong> 
+
+        <div style="margin-left: 10px;">
+          <div *ngFor="let data of selectedProducto.receta">
+            <ng-container>
+              <nz-row>
+                <p><b>Descripcion: </b>{{ data.articulo.descripcion }}</p>
+                <p style="margin-left: 10px;"><b>Cantidad: </b>{{ data.cantidad }}</p>
+              </nz-row>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+
+</nz-modal>

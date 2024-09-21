@@ -238,23 +238,23 @@
                     <th class="desc">Descripcion</th>
                     <th>Unitario</th>
                     <th>Descuento</th>
-                    <th>Total</th>
+                    <th>Subtotal</th>
                 </tr>
             </thead>
             <tbody>
                 {{detVentaHtml}}
                 <tr>
-                    <td class="colspam2" colspan="3" ><b>Total: </b> {{numLetra}} </td>
+                    <td class="colspam2" colspan="3" ><b>Total: </b> Gs {{numLetra}} </td>
                     <td class="grand total">Total</td>
                     <td class="grand total">{{total}}</td>
                 </tr>
                 <tr>
-                    <td class="colspam2" colspan="3">Situación del pedido: Pendiente </td>
-                    <td class="grand total">Delivery</td>
-                    <td class="grand total">{{delivery}}</td>
+                    <td class="colspam2" colspan="5">Situación del pedido: Pendiente </td>
+                    <!--td class="grand total">Delivery</td>
+                    <td class="grand total">{{delivery}}</td-->
                 </tr>
                 <tr>
-                    <td class="colspam2" colspan="3">Total iva {{totalIva}}</td>
+                    <td class="colspam2" colspan="3">Total iva: Gs {{totalIva}}</td>
                     <td class="grand total gral" colspan="2">Gs {{totalGeneral}}</td>
                 </tr>
             </tbody>

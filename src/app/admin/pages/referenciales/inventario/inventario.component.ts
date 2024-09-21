@@ -44,6 +44,28 @@ export class InventarioComponent implements OnInit {
   listOfDisplayData: InventarioModel[] = [];
   expandSet = new Set<number>();
 
+  //Modal
+  isVisible = false;
+  isOkLoading = false;
+  selectedInventario: InventarioModel | null = null;
+
+  showModal(inventario: InventarioModel): void {
+    this.selectedInventario = inventario;
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 100);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
   onExpandChange(id: number, checked: boolean): void {
     if (checked) {
       this.expandSet.add(id);

@@ -1,8 +1,10 @@
 <nz-layout>
   <nz-header>
-    <div [routerLink]="'home'" style="cursor: pointer;" class="logo"></div>
+    <div class="logo">
+      <img src="assets/logo.jpg" width="60" [routerLink]="'home'" style="cursor: pointer;">
+    </div>
     <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
-      <li (click)="logout()" nz-menu-item>logout</li>
+      <li (click)="logout()" nz-menu-item>Cerrar sesion</li>
     </ul>
   </nz-header>
   <nz-content class="outer-content">
@@ -12,7 +14,7 @@
       <ul nz-menu nzMode="inline" class="sider-menu">
         <li nz-menu-item [routerLink]="'home'">
           <span nz-icon nzType="home"></span>
-          <span>Home</span>
+          <span>Inicio</span>
         </li>
         <li nz-submenu nzTitle="Sistema" nzIcon="setting" *ngIf="hasAnyRole(['admin','stock'])">
           <ul>

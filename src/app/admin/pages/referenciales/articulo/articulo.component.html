@@ -42,7 +42,7 @@
           <!--td><app-image-decode [image]="data.img" /></td-->
           <td>{{ data.estado=="AC"?"Activo":"Inactivo" }}</td>
           <td>
-            <a style="padding: 4px;" (click)="startEdit(data.idarticulo)">Edit</a>
+            <a style="padding: 4px;" (click)="startEdit(data.idarticulo)">editar</a>
             <a style="padding: 4px;" nz-popconfirm nzPopconfirmTitle="Seguro que desea eliminar?"
               (nzOnConfirm)="anulaRow(data.idarticulo)">Anular</a>
           </td>

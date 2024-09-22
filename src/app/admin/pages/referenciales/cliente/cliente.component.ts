@@ -45,7 +45,7 @@ export class ClienteComponent implements OnInit {
   selectedCliente: ClienteModel | null = null;
 
   //Para paginacion
-  pageSize = 100;
+  pageSize = 10;
   pageIndex = 1;
 
   showModal(cliente: ClienteModel): void {

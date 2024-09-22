@@ -41,7 +41,7 @@ export class ArticuloComponent implements OnInit {
   image?: any;
 
   //Para paginacion
-  pageSize = 100;
+  pageSize = 10;
   pageIndex = 1;
 
   //Modal

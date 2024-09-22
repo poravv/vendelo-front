@@ -51,7 +51,7 @@ export class InventarioComponent implements OnInit {
 
   //Para paginacion
   totalItems = 0;
-  pageSize = 100;
+  pageSize = 10;
   pageIndex = 1;
 
   showModal(inventario: InventarioModel): void {

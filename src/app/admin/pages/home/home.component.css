@@ -37,9 +37,9 @@
     justify-content: center;
     align-items: center;
     --background-color: red;
-    height: 800px;
+    height: 600px;
   }
 
   .img {
-    width: 50em;
+    width: 40em;
   }

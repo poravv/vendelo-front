@@ -55,6 +55,9 @@ export class VentaComponent implements OnInit {
   avatarUrl?: string;
   file?: string;
   image?: any;
+  //Para paginacion
+  pageSize = 10;
+  pageIndex = 1;
 
   expandSet = new Set<number>();
   expandSetDetail = new Set<number>();
@@ -210,11 +213,11 @@ export class VentaComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getAllVenta();
+    this.getAllVenta(this.pageIndex);
   }
 
-  getAllVenta() {
-    this.ventaService.getVentaUsuario().subscribe({
+  getAllVenta(page: number) {
+    this.ventaService.getVentaUsuarioPage(page, this.pageSize).subscribe({
       next: (response) => {
         if (response) {
 

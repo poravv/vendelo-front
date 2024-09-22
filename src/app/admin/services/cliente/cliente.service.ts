@@ -41,6 +41,15 @@ export class ClienteService {
     });
   }
 
+  getClientePage(page:number,pageSize:number):Observable<any> {
+    //console.log(this.oauthService.getAccessToken());
+    return this.httpClient.get(`${baseURL}/get?page=${page}&limit=${pageSize}`, {
+      headers: {
+        'Authorization': `Bearer ${this.oauthService.getAccessToken()}`,
+      }
+    });
+  }
+
   getClienteByPk(idcliente:string):Observable<any> {
     //console.log(this.oauthService.getAccessToken());
     return this.httpClient.get(`${baseURL}/get/${idcliente}`, {

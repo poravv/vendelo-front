@@ -42,7 +42,7 @@ export class ArticuloCreateComponent implements OnInit {
     this.validateForm = this.fb.group({
       descripcion: ['', [Validators.required], [this.userNameAsyncValidator]],
       precio: ['', [Validators.required]],
-      peso: ['', [Validators.required]],
+      peso: [0],
       idproveedor: ['', [Validators.required]],
       img: ['', [Validators.required]],
       estado: ['', [Validators.required]],

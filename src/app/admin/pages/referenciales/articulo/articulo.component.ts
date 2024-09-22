@@ -40,6 +40,32 @@ export class ArticuloComponent implements OnInit {
   file?: string;
   image?: any;
 
+  //Para paginacion
+  pageSize = 10;
+  pageIndex = 1;
+
+  //Modal
+  isVisible = false;
+  isOkLoading = false;
+  selectedArticulo: ArticuloModel | null = null;
+
+  showModal(articulo: ArticuloModel): void {
+    this.selectedArticulo = articulo;
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 100);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
   startEdit(idarticulo: string): void {
     this.editCache[idarticulo].edit = true;
   }
@@ -133,11 +159,11 @@ export class ArticuloComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllArticulo();
+    this.getAllArticulo(this.pageIndex);
   }
 
-  getAllArticulo() {
-    this.articuloService.getArticulo().subscribe({
+  getAllArticulo(page: number) {
+    this.articuloService.getArticulosPage(page, this.pageSize).subscribe({
       next: (response) => {
         if (response) {
           response.body.map((data: ArticuloModel) => {

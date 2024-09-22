@@ -22,6 +22,15 @@ export class InventarioService {
     });
   }
 
+  getInventarioSucursalPage(page:number,pageSize:number):Observable<any> {
+    //console.log(this.oauthService.getAccessToken());
+    return this.httpClient.get(`${baseURL}/getinvsuc?page=${page}&limit=${pageSize}`, {
+      headers: {
+        'Authorization': `Bearer ${this.oauthService.getAccessToken()}`,
+      }
+    });
+  }
+
   getInventario():Observable<any> {
     //console.log(this.oauthService.getAccessToken());
     return this.httpClient.get(`${baseURL}/get`, {

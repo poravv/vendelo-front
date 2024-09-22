@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductoFinalService } from 'src/app/admin/services/producto_final/producto_final.service';
 import { MessageService } from 'src/app/admin/utils/message.service';
-import { ProveedorModel } from '../proveedor/proveedor.component';
 import { NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -46,6 +45,11 @@ export class ProductoFinalComponent implements OnInit {
   listOfDisplayData: ProductoFinalModel[] = [];
   expandSet = new Set<number>();
 
+  //Para paginacion
+  totalItems = 0;
+  pageSize = 10;
+  pageIndex = 1;
+
   onExpandChange(id: number, checked: boolean): void {
     if (checked) {
       this.expandSet.add(id);
@@ -58,6 +62,28 @@ export class ProductoFinalComponent implements OnInit {
   avatarUrl?: string;
   file?: string;
   image?: any;
+
+  //Modal
+  isVisible = false;
+  isOkLoading = false;
+  selectedProducto: ProductoFinalModel | null = null;
+
+  showModal(producto: ProductoFinalModel): void {
+    this.selectedProducto = producto;
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 100);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
 
   startEdit(idproducto_final: string): void {
     this.editCache[idproducto_final].edit = true;
@@ -152,11 +178,11 @@ export class ProductoFinalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllProductoFinal();
+    this.getAllProductoFinal(this.pageIndex);
   }
 
-  getAllProductoFinal() {
-    this.producto_finalService.getProductoFinal().subscribe({
+  getAllProductoFinal(page: number) {
+    this.producto_finalService.getProductoFinalPage(page, this.pageSize).subscribe({
       next: (response) => {
         if (response) {
           //console.log(response)

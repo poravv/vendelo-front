@@ -5,7 +5,6 @@ import { NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { CiudadService } from 'src/app/admin/services/ciudad/ciudad.service';
-import { NACIONALIDAD } from 'src/app/admin/utils/nacionalidades';
 import { PersonaService } from 'src/app/admin/services/persona/persona.service';
 
 export interface ImagenBuffer {
@@ -53,7 +52,7 @@ export class PersonaComponent implements OnInit {
 
   //Para paginacion
   totalItems = 0;
-  pageSize = 100;
+  pageSize = 10;
   pageIndex = 1;
 
   constructor(

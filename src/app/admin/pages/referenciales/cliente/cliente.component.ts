@@ -15,12 +15,12 @@ export interface ClienteModel {
   img: ImagenBuffer;
   correo: string;
   lat: string;
-  long:string;
-  idciudad:number;
-  tipo_cli:string;
-  sexo:string;
-  comision:number;
-  ciudad:CiudadModel
+  long: string;
+  idciudad: number;
+  tipo_cli: string;
+  sexo: string;
+  comision: number;
+  ciudad: CiudadModel
 }
 
 @Component({
@@ -31,7 +31,7 @@ export interface ClienteModel {
 
 export class ClienteComponent implements OnInit {
 
-  constructor(private clienteService: ClienteService, private messageService: MessageService,private msg: NzMessageService) { }
+  constructor(private clienteService: ClienteService, private messageService: MessageService, private msg: NzMessageService) { }
 
   editCache: { [key: string]: { edit: boolean; data: ClienteModel } } = {};
   listOfData: ClienteModel[] = [];
@@ -39,6 +39,32 @@ export class ClienteComponent implements OnInit {
   visible = false;
   listOfDisplayData: ClienteModel[] = [];
 
+  //Modal
+  isVisible = false;
+  isOkLoading = false;
+  selectedCliente: ClienteModel | null = null;
+
+  //Para paginacion
+  pageSize = 10;
+  pageIndex = 1;
+
+  showModal(cliente: ClienteModel): void {
+    this.selectedCliente = cliente;
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 100);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+  
   reset(): void {
     this.searchValue = '';
     this.search();
@@ -85,11 +111,11 @@ export class ClienteComponent implements OnInit {
     });
   }
 
-  anulaRow(idcliente:string):void {
+  anulaRow(idcliente: string): void {
     const index = this.listOfData.findIndex(item => item.idcliente === idcliente);
-    this.listOfData[index].estado="IN"
+    this.listOfData[index].estado = "IN"
     //console.log(this.listOfData[index]);
-    this.clienteService.updateCliente(this.listOfData[index],idcliente).subscribe((response) => {
+    this.clienteService.updateCliente(this.listOfData[index], idcliente).subscribe((response) => {
       //console.log(response);
       if (response.mensaje == 'error') {
         this.messageService.createMessage('error', response.detmensaje);
@@ -100,11 +126,11 @@ export class ClienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllCliente();
+    this.getAllCliente(this.pageIndex);
   }
 
-  getAllCliente() {
-    this.clienteService.getCliente().subscribe({
+  getAllCliente(page: number) {
+    this.clienteService.getClientePage(page, this.pageSize).subscribe({
       next: (response) => {
         //console.log(response)
         if (response) {

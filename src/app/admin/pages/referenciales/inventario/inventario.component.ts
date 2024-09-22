@@ -44,6 +44,33 @@ export class InventarioComponent implements OnInit {
   listOfDisplayData: InventarioModel[] = [];
   expandSet = new Set<number>();
 
+  //Modal
+  isVisible = false;
+  isOkLoading = false;
+  selectedInventario: InventarioModel | null = null;
+
+  //Para paginacion
+  totalItems = 0;
+  pageSize = 10;
+  pageIndex = 1;
+
+  showModal(inventario: InventarioModel): void {
+    this.selectedInventario = inventario;
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isOkLoading = false;
+    }, 100);
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+
   onExpandChange(id: number, checked: boolean): void {
     if (checked) {
       this.expandSet.add(id);
@@ -104,11 +131,11 @@ export class InventarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllInventario();
+    this.getAllInventario(this.pageIndex);
   }
 
-  getAllInventario() {
-    this.inventarioService.getInventarioSucursal().subscribe({
+  getAllInventario(page: number) {
+    this.inventarioService.getInventarioSucursalPage(page, this.pageSize).subscribe({
       next: (response) => {
         //console.log(response);
         if (response) {

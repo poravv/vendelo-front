@@ -14,9 +14,9 @@
     nzTableLayout="fixed" nzSize="middle" nzShowPagination nzShowSizeChanger>
     <thead>
       <tr>
-        <th nzLeft nzWidth="60px">Cuota</th>
+        
         <th nzLeft nzWidth="70px">Detalle</th>
-        <th>Id</th>
+        <!--th>Id</th-->
         <th>Cliente</th>
         <th>Ruc</th>
         <th>Fecha</th>
@@ -25,6 +25,7 @@
         <th>Tipo de venta</th>
         <th>Servicio</th>
         <th>Delivery</th>
+        <th nzWidth="60px">Cuota</th>
         <th>Estado</th>
         <th></th> 
       </tr>
@@ -32,11 +33,9 @@
     <tbody>
       <ng-container *ngFor="let data of editRowTable.data">
         <tr>
-          <td nzLeft [nzExpand]="expandSet.has(data.idventa)" (nzExpandChange)="onExpandChange(data.idventa, $event)">
-          </td>
           <td nzLeft [nzExpand]="expandSetDetail.has(data.idventa)"
             (nzExpandChange)="onExpandChangeDetail(data.idventa, $event)"></td>
-          <td>{{ data.idventa }}</td>
+          <!--td>{{ data.idventa }}</td-->
           <td>{{ data.cliente.razon_social }}</td>
           <td>{{ data.cliente.ruc }}</td>
           <td>{{ data.fecha }}</td>
@@ -45,6 +44,8 @@
           <td>{{ data.tipo_venta == "CR" ? "Crédito":"Contado"}}</td>
           <td>{{ data.retiro }}</td>
           <td>{{ data.costo_envio | thousandsSeparator }}</td>
+          <td [nzExpand]="expandSet.has(data.idventa)" (nzExpandChange)="onExpandChange(data.idventa, $event)">
+          </td>
           <td>{{ data.estado }}</td>
           <td>
             <a style="padding: 4px;" (click)="generaTicket(data)">Ticket</a>

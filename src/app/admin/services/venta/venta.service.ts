@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { catchError, Observable, of, Subscriber } from 'rxjs';
+import { Observable} from 'rxjs';
 import { environment } from 'src/app/environment/environments';
 
 const baseURL = environment.serverUrl + '/venta';
@@ -25,6 +25,24 @@ export class VentaService {
   getVentaUsuario(): Observable<any> {
     //console.log(this.oauthService.getAccessToken());
     return this.httpClient.get(`${baseURL}/getvenusu`, {
+      headers: {
+        'Authorization': `Bearer ${this.oauthService.getAccessToken()}`,
+      }
+    });
+  }
+
+  getVentaUsuarioPage(page:number,pageSize:number):Observable<any> {
+    //console.log(this.oauthService.getAccessToken());
+    return this.httpClient.get(`${baseURL}/getvenusu?page=${page}&limit=${pageSize}`, {
+      headers: {
+        'Authorization': `Bearer ${this.oauthService.getAccessToken()}`,
+      }
+    });
+  }
+
+  getVentaPage(page:number,pageSize:number):Observable<any> {
+    //console.log(this.oauthService.getAccessToken());
+    return this.httpClient.get(`${baseURL}/get?page=${page}&limit=${pageSize}`, {
       headers: {
         'Authorization': `Bearer ${this.oauthService.getAccessToken()}`,
       }

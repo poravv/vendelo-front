@@ -47,6 +47,7 @@ import { PagoComponent } from './admin/pages/referenciales/pago/pago.component';
 import { AuthService } from './admin/services/auth/auth.service';
 import { DecimalPipe } from '@angular/common';
 import { ThousandsSeparatorPipe } from './admin/utils/separador-miles/separador-miles';
+import { SavedReportComponent } from './admin/utils/save-report/save-report.component';
 
 
 registerLocaleData(es);
@@ -108,7 +109,8 @@ function initializeOAuth(oauthService: OAuthService): Promise<void> {
     ClienteBusquedaComponent,
     DeudaListadoComponent,
     PagoComponent,
-    ThousandsSeparatorPipe
+    ThousandsSeparatorPipe,
+    SavedReportComponent
   ],
   imports: [
     BrowserModule,

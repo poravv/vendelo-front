@@ -24,6 +24,7 @@ import { ClienteBusquedaComponent } from './admin/pages/referenciales/pago/clien
 import { DeudaListadoComponent } from './admin/pages/referenciales/pago/deuda-listado/deuda-listado.component';
 import { PagoComponent } from './admin/pages/referenciales/pago/pago.component';
 import { RoleGuard } from './admin/services/auth/role.guard';
+import { SavedReportComponent } from './admin/utils/save-report/save-report.component';
 
 const routes: Routes = [
   { path: '', component: homeComponent },
@@ -97,6 +98,12 @@ const routes: Routes = [
       { path: 'create', component: VentaCreateComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } }
     ]
 
+  },
+  {
+    path: 'reportes',
+    children: [
+      { path: 'execute', component: SavedReportComponent, canActivate: [RoleGuard], data: { expectedRoles: ['admin'] } },
+    ]
   },
   { path: '**', redirectTo: '' },
 ];

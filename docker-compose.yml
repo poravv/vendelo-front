@@ -1,7 +1,7 @@
 services:
-  web_dolce:
+  web_ç:
     build: .
-    image: dolce-front
-    container_name: contenedor-dolce-front
+    image: lomeat-front
+    container_name: contenedor-lomeat-front
     ports:
       - "4005:4000"

@@ -1,5 +1,5 @@
 services:
-  web_ç:
+  web_lomeat:
     build: .
     image: lomeat-front
     container_name: contenedor-lomeat-front
